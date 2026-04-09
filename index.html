@@ -1,208 +1,243 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفاء الروح | التطوير الاحترافي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<title>صفاء الروح</title>
+    <style>
+        :root {
+            --main-green: #1a4d2e;
+            --gold-accent: #d4af37;
+            --soft-white: #f8fafc;
+            --card-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Amiri:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        body {
+            margin: 0;
+            font-family: 'Almarai', sans-serif;
+            background-color: var(--soft-white);
+            color: #333;
+        }
 
-<style>
-:root{
---main:#1a4d2e;
---gold:#d4af37;
---bg:#f4f7f6;
-}
+        /* الهيدر الجديد */
+        .header-container {
+            height: 250px;
+            background: linear-gradient(rgba(26, 77, 46, 0.7), rgba(26, 77, 46, 0.5)), 
+                        url('https://i.postimg.cc/zvS6s80G/IMG-20260404-200653.jpg') center/cover;
+            position: relative;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
 
-body{
-margin:0;
-font-family:'Almarai',sans-serif;
-background:var(--bg);
-}
+        /* الأيقونة البارزة */
+        .logo-wrapper {
+            position: absolute;
+            bottom: -45px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
 
-/* الهيدر */
-.header{
-height:350px;
-background:url('https://i.postimg.cc/zvS6s80G/IMG-20260404-200653.jpg') center/cover;
-position:relative;
-}
+        .main-logo {
+            width: 100px;
+            height: 100px;
+            background: #fff;
+            border-radius: 25px; /* شكل مربع منحني عصري */
+            padding: 5px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #fff;
+        }
 
-.header::after{
-content:'';
-position:absolute;
-bottom:0;
-width:100%;
-height:80px;
-background:linear-gradient(transparent,#f4f7f6);
-}
+        .main-logo img {
+            width: 90%;
+            border-radius: 20px;
+        }
 
-.logo{
-position:absolute;
-bottom:-40px;
-left:50%;
-transform:translateX(-50%);
-width:90px;height:90px;
-border-radius:50%;
-background:#fff;
-display:flex;align-items:center;justify-content:center;
-box-shadow:0 8px 20px rgba(0,0,0,.1);
-}
+        /* النصوص العلوية */
+        .brand-section {
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 30px;
+        }
 
-.logo img{
-width:85%;border-radius:50%;
-}
+        .brand-section h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--main-green);
+            margin: 0;
+        }
 
-/* الاسم */
-.title{
-text-align:center;
-margin-top:60px;
-font-weight:800;
-color:var(--main);
-}
+        .brand-section p {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
 
-.desc{
-text-align:center;
-font-size:12px;
-color:#777;
-margin-bottom:20px;
-}
+        /* شبكة الأقسام */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 0 20px 40px 20px;
+        }
 
-/* كرت القرآن */
-.card{
-background:#fff;
-margin:15px;
-padding:15px;
-border-radius:18px;
-box-shadow:0 6px 18px rgba(0,0,0,.07);
-}
+        .nav-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 20px 10px;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
-/* الأقسام */
-.grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:12px;
-padding:15px;
-}
+        .nav-card:active {
+            transform: scale(0.95);
+            background: #f0f4f2;
+        }
 
-.item{
-background:#fff;
-border-radius:18px;
-padding:18px;
-text-align:center;
-box-shadow:0 6px 18px rgba(0,0,0,.06);
-cursor:pointer;
-transition:.3s;
-}
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            background: rgba(26, 77, 46, 0.05);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            position: relative;
+        }
 
-.item:hover{
-transform:scale(.97);
-}
+        .icon-box i {
+            font-size: 22px;
+            color: var(--main-green);
+        }
 
-.item i{
-font-size:22px;
-color:var(--main);
-margin-bottom:8px;
-}
+        .audio-indicator {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--gold-accent);
+            color: white;
+            font-size: 10px;
+            padding: 3px 6px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
 
-.item span{
-display:block;
-font-size:13px;
-font-weight:700;
-color:var(--main);
-}
+        .nav-card span {
+            font-size: 13px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
 
-/* الفوتر */
-.footer{
-margin:20px;
-text-align:center;
-font-size:12px;
-color:#999;
-}
-</style>
+        /* الفوتر المحسن */
+        .dev-footer {
+            padding: 25px;
+            text-align: center;
+            background: #fff;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+        }
+
+        .dev-footer .power {
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .dev-footer .brand-name {
+            display: block;
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--main-green);
+            margin-top: 4px;
+        }
+
+        .brand-name span {
+            color: var(--gold-accent);
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- الهيدر -->
-<div class="header">
-<div class="logo">
-<img src="https://i.postimg.cc/05cL5zw5/20260405-135743.png">
-</div>
-</div>
+    <div class="header-container">
+        <div class="logo-wrapper">
+            <div class="main-logo">
+                <img src="https://i.postimg.cc/05cL5zw5/20260405-135743.png" alt="Logo">
+            </div>
+        </div>
+    </div>
 
-<h2 class="title">صفاء الروح</h2>
-<p class="desc">مساحتك للأذكار والسكينة</p>
+    <div class="brand-section">
+        <h1>صفاء الروح</h1>
+        <p>مساحتك الروحية للذكر والهدوء</p>
+    </div>
 
-<!-- كرت -->
-<div class="card">
-<p id="verse">...</p>
-</div>
+    <div class="app-grid">
+        
+        <a href="https://ahmedsaleh917.github.io/quran/" class="nav-card">
+            <div class="icon-box">
+                <i class="fa-solid fa-book-quran"></i>
+                <div class="audio-indicator"><i class="fa-solid fa-headphones"></i></div>
+            </div>
+            <span>القرآن الكريم</span>
+        </a>
 
-<!-- الأقسام -->
-<div class="grid">
+        <a href="https://ahmedsaleh917.github.io/azkar/" class="nav-card">
+            <div class="icon-box"><i class="fa-solid fa-hands-praying"></i></div>
+            <span>الأذكار</span>
+        </a>
 
-<div class="item" onclick="openPage('https://ahmedsaleh917.github.io/quran/')">
-<i class="fa-solid fa-book-quran"></i>
-<span>القرآن</span>
-</div>
+        <a href="https://ahmedsaleh917.github.io/ruqia/" class="nav-card">
+            <div class="icon-box"><i class="fa-solid fa-shield-heart"></i></div>
+            <span>الرقية الشرعية</span>
+        </a>
 
-<div class="item" onclick="openPage('https://ahmedsaleh917.github.io/azkar/')">
-<i class="fa-solid fa-hands-praying"></i>
-<span>الأذكار</span>
-</div>
+        <a href="https://ahmedsaleh917.github.io/akhtbar/" class="nav-card">
+            <div class="icon-box"><i class="fa-solid fa-lightbulb"></i></div>
+            <span>اختبر معلوماتك الدينية</span>
+        </a>
 
-<div class="item" onclick="openPage('https://ahmedsaleh917.github.io/ruqia/')">
-<i class="fa-solid fa-shield-heart"></i>
-<span>الرقية</span>
-</div>
+        <a href="https://ahmedsaleh917.github.io/awkat-alslat/" class="nav-card">
+            <div class="icon-box"><i class="fa-solid fa-mosque"></i></div>
+            <span>أوقات الصلاة</span>
+        </a>
 
-<div class="item" onclick="openPage('https://ahmedsaleh917.github.io/akhtbar/')">
-<i class="fa-solid fa-brain"></i>
-<span>اختبار</span>
-</div>
+        <a href="https://ahmedsaleh917.github.io/msbaha/" class="nav-card">
+            <div class="icon-box"><i class="fa-solid fa-circle-dot"></i></div>
+            <span>مسبحة إلكترونية</span>
+        </a>
 
-<div class="item" onclick="openPage('https://ahmedsaleh917.github.io/awkat-alslat/')">
-<i class="fa-solid fa-mosque"></i>
-<span>الصلاة</span>
-</div>
+        <a href="https://ahmedsaleh917.github.io/ahlam/" class="nav-card">
+            <div class="icon-box"><i class="fa-solid fa-cloud-moon"></i></div>
+            <span>تفسير الأحلام</span>
+        </a>
 
-<div class="item" onclick="openPage('https://ahmedsaleh917.github.io/msbaha/')">
-<i class="fa-solid fa-beads"></i>
-<span>المسبحة</span>
-</div>
+        <a href="https://ahmedsaleh917.github.io/omrah/" class="nav-card">
+            <div class="icon-box"><i class="fa-solid fa-kaaba"></i></div>
+            <span>دليل الحج والعمرة</span>
+        </a>
 
-<div class="item" onclick="openPage('https://ahmedsaleh917.github.io/ahlam/')">
-<i class="fa-solid fa-moon"></i>
-<span>الأحلام</span>
-</div>
+    </div>
 
-<div class="item" onclick="openPage('https://ahmedsaleh917.github.io/omrah/')">
-<i class="fa-solid fa-kaaba"></i>
-<span>الحج</span>
-</div>
-
-</div>
-
-<div class="footer">
-sabriFX ✨
-</div>
-
-<script>
-const verses = [
-"ألا بذكر الله تطمئن القلوب",
-"إن مع العسر يسرا",
-"لا تقنطوا من رحمة الله"
-];
-
-document.getElementById("verse").innerText =
-verses[Math.floor(Math.random()*verses.length)];
-
-function openPage(url){
-window.location.href=url;
-}
-</script>
+    <div class="dev-footer">
+        <span class="power">Powered by</span>
+        <span class="brand-name">تطوير <span>sabriFX</span></span>
+    </div>
 
 </body>
 </html>
