@@ -350,42 +350,42 @@ body{
 <h2 class="sections-title">أقسام التطبيق</h2>
 <div class="grid">
 
-  <div class="item" onclick="openPage('https://ahmedsaleh917.github.io/quran/')">
+  <div class="item" onclick="navigateToPage('quran')">
     <i class="fa-solid fa-book-quran"></i>
     <span>القرآن الكريم</span>
   </div>
 
-  <div class="item" onclick="openPage('https://ahmedsaleh917.github.io/azkar/')">
+  <div class="item" onclick="navigateToPage('azkar')">
     <i class="fa-solid fa-hands-praying"></i>
     <span>الأذكار والأدعية</span>
   </div>
 
-  <div class="item" onclick="openPage('https://ahmedsaleh917.github.io/ruqia/')">
+  <div class="item" onclick="navigateToPage('ruqia')">
     <i class="fa-solid fa-shield-heart"></i>
     <span>الرقية الشرعية</span>
   </div>
 
-  <div class="item" onclick="openPage('https://ahmedsaleh917.github.io/akhtbar/')">
+  <div class="item" onclick="navigateToPage('akhtbar')">
     <i class="fa-solid fa-brain"></i>
     <span>اختبار ثقافي</span>
   </div>
 
-  <div class="item" onclick="openPage('https://ahmedsaleh917.github.io/awkat-alslat/')">
+  <div class="item" onclick="navigateToPage('awkat-alslat')">
     <i class="fa-solid fa-mosque"></i>
     <span>مواقيت الصلاة</span>
   </div>
 
-  <div class="item" onclick="openPage('https://ahmedsaleh917.github.io/msbaha/')">
+  <div class="item" onclick="navigateToPage('msbaha')">
     <i class="fa-solid fa-beads"></i>
     <span>المسبحة الإلكترونية</span>
   </div>
 
-  <div class="item" onclick="openPage('https://ahmedsaleh917.github.io/ahlam/')">
+  <div class="item" onclick="navigateToPage('ahlam')">
     <i class="fa-solid fa-moon"></i>
     <span>تفسير الأحلام</span>
   </div>
 
-  <div class="item" onclick="openPage('https://ahmedsaleh917.github.io/omrah/')">
+  <div class="item" onclick="navigateToPage('omrah')">
     <i class="fa-solid fa-kaaba"></i>
     <span>مناسك الحج والعمرة</span>
   </div>
@@ -405,6 +405,18 @@ body{
 </div>
 
 <script>
+// ==================== روابط الأقسام ====================
+const pagesMap = {
+  'quran': 'https://ahmedsaleh917.github.io/quran/',
+  'azkar': 'https://ahmedsaleh917.github.io/azkar/',
+  'ruqia': 'https://ahmedsaleh917.github.io/ruqia/',
+  'akhtbar': 'https://ahmedsaleh917.github.io/akhtbar/',
+  'awkat-alslat': 'https://ahmedsaleh917.github.io/awkat-alslat/',
+  'msbaha': 'https://ahmedsaleh917.github.io/msbaha/',
+  'ahlam': 'https://ahmedsaleh917.github.io/ahlam/',
+  'omrah': 'https://ahmedsaleh917.github.io/omrah/'
+};
+
 // ==================== آيات الهيدر العشوائية ====================
 const headerVerses = [
   {text:"أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ", ref:"الرعد: 28"},
@@ -419,6 +431,105 @@ const headerVerses = [
   {text:"فَإِنَّ مَعَ الْعُسْرِ يُسْرًا", ref:"الشرح: 5"}
 ];
 
+// ==================== التنقل بين الصفحات مع التحكم في زر الرجوع ====================
+function navigateToPage(pageKey){
+  const url = pagesMap[pageKey];
+  if(url){
+    // إضافة حالة للسماح بالرجوع للصفحة الرئيسية
+    history.pushState({page: pageKey}, pageKey, window.location.href);
+    
+    // تأثير الانتقال
+    document.body.style.transition = 'opacity 0.3s ease';    document.body.style.opacity = '0.7';
+    
+    setTimeout(() => {
+      window.location.href = url;
+    }, 200);
+  }
+}
+
+// ==================== التعامل مع زر الرجوع ====================
+window.addEventListener('popstate', function(event) {
+  // إذا كان هناك حالة في التاريخ، نعود للصفحة الرئيسية
+  if(event.state && event.state.page) {
+    // المستخدم ضغط زر الرجوع من قسم ما
+    // سيعود تلقائياً للصفحة الرئيسية لأننا في نفس الصفحة
+    console.log('العودة للواجهة الرئيسية');
+  }
+});
+
+// منع الخروج من التطبيق عند الضغط على زر الرجوع في الصفحة الرئيسية
+let backPressTime = 0;
+window.addEventListener('popstate', function(e) {
+  const currentTime = new Date().getTime();
+  const timeDiff = currentTime - backPressTime;
+  
+  if(timeDiff < 2000 && backPressTime !== 0) {
+    // إذا ضغط المستخدم زر الرجوع مرتين خلال ثانيتين، اسمح بالخروج
+    backPressTime = 0;
+    return;
+  }
+  
+  // في الصفحة الرئيسية، امنع الخروج واعرض رسالة
+  if(window.location.pathname === '/' || window.location.pathname.endsWith('index.html')) {
+    e.preventDefault();
+    
+    // إضافة حالة جديدة للتاريخ
+    history.pushState(null, null, window.location.href);
+    
+    // عرض رسالة للمستخدم
+    showToast('اضغط رجوع مرة أخرى للخروج من التطبيق');
+    backPressTime = currentTime;
+    
+    // إزالة الرسالة بعد 2 ثانية
+    setTimeout(() => {
+      backPressTime = 0;
+    }, 2000);
+  }
+});
+
+// دالة لعرض الرسالة المنبثقة
+function showToast(message) {  // إنشاء عنصر الرسالة إذا لم يكن موجوداً
+  let toast = document.getElementById('backToast');
+  if(!toast) {
+    toast = document.createElement('div');
+    toast.id = 'backToast';
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(26, 77, 46, 0.95);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 700;
+      z-index: 10000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      border: 2px solid var(--gold);
+    `;
+    document.body.appendChild(toast);
+  }
+  
+  toast.textContent = message;
+  toast.style.opacity = '1';
+  
+  setTimeout(() => {
+    toast.style.opacity = '0';
+  }, 2000);
+}
+
+// إضافة حالة أولية عند تحميل الصفحة
+window.addEventListener('load', function() {
+  // إضافة حالة للتاريخ عند تحميل الصفحة الرئيسية
+  if(!history.state) {
+    history.replaceState({page: 'home'}, 'home', window.location.href);
+  }
+});
+
 // ==================== دوال العرض ====================
 function setRandomVerse(){
   const verse = headerVerses[Math.floor(Math.random() * headerVerses.length)];
@@ -426,8 +537,7 @@ function setRandomVerse(){
   document.getElementById('verseRef').textContent = verse.ref;
 }
 
-// ==================== وظائف إضافية ====================
-function openPage(url){
+// ==================== وظائف إضافية ====================function openPage(url){
   // تأثير بسيط قبل الانتقال
   document.body.style.opacity = '0.7';
   setTimeout(() => {
@@ -439,7 +549,8 @@ function openPage(url){
 window.addEventListener('scroll', () => {
   const scrollTop = document.getElementById('scrollTop');
   if(window.scrollY > 300){
-    scrollTop.classList.add('visible');  } else {
+    scrollTop.classList.add('visible');
+  } else {
     scrollTop.classList.remove('visible');
   }
 });
