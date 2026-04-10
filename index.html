@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>صفاء الروح | التطوير الاحترافي</title>
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -12,164 +12,158 @@
             --main-green: #1a4d2e;
             --gold-accent: #d4af37;
             --soft-white: #f8fafc;
-            --card-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            --card-shadow: 0 8px 20px rgba(0,0,0,0.06);
         }
 
         body {
             margin: 0;
+            padding: 0;
             font-family: 'Almarai', sans-serif;
             background-color: var(--soft-white);
             color: #333;
+            overflow-x: hidden; /* لمنع المشاكل في WebView */
+            -webkit-tap-highlight-color: transparent; /* إزالة اللون الأزرق عند اللمس */
         }
 
-        /* الهيدر الجديد */
+        /* الهيدر المحسن */
         .header-container {
-            height: 250px;
-            background: linear-gradient(rgba(26, 77, 46, 0.7), rgba(26, 77, 46, 0.5)), 
+            height: 220px;
+            background: linear-gradient(rgba(26, 77, 46, 0.6), rgba(26, 77, 46, 0.4)), 
                         url('https://i.postimg.cc/zvS6s80G/IMG-20260404-200653.jpg') center/cover;
             position: relative;
-            border-bottom-left-radius: 40px;
-            border-bottom-right-radius: 40px;
+            border-bottom-left-radius: 45px;
+            border-bottom-right-radius: 45px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        /* الأيقونة البارزة */
         .logo-wrapper {
             position: absolute;
-            bottom: -45px;
+            bottom: -40px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
         }
 
         .main-logo {
-            width: 100px;
-            height: 100px;
+            width: 90px;
+            height: 90px;
             background: #fff;
-            border-radius: 25px; /* شكل مربع منحني عصري */
+            border-radius: 22px;
             padding: 5px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.12);
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 3px solid #fff;
+            border: 2px solid #fff;
         }
 
         .main-logo img {
-            width: 90%;
-            border-radius: 20px;
+            width: 85%;
+            border-radius: 18px;
         }
 
-        /* النصوص العلوية */
         .brand-section {
             text-align: center;
-            margin-top: 60px;
-            margin-bottom: 30px;
+            margin-top: 55px;
+            margin-bottom: 25px;
         }
 
         .brand-section h1 {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 800;
             color: var(--main-green);
             margin: 0;
         }
 
         .brand-section p {
-            font-size: 14px;
-            color: #666;
-            margin-top: 5px;
+            font-size: 13px;
+            color: #777;
+            margin-top: 4px;
         }
 
-        /* شبكة الأقسام */
+        /* شبكة الأقسام المعدلة لسكتشوير */
         .app-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            padding: 0 20px 40px 20px;
+            gap: 12px;
+            padding: 0 15px 30px 15px;
         }
 
         .nav-card {
             background: #fff;
-            border-radius: 20px;
-            padding: 20px 10px;
+            border-radius: 18px;
+            padding: 18px 8px;
             text-align: center;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: 0.2s ease;
             box-shadow: var(--card-shadow);
-            border: 1px solid rgba(0,0,0,0.02);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
         }
 
         .nav-card:active {
-            transform: scale(0.95);
-            background: #f0f4f2;
+            transform: scale(0.96);
+            background: #fdfdfd;
         }
 
         .icon-box {
-            width: 50px;
-            height: 50px;
-            background: rgba(26, 77, 46, 0.05);
-            border-radius: 15px;
+            width: 45px;
+            height: 45px;
+            background: rgba(26, 77, 46, 0.06);
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             position: relative;
         }
 
         .icon-box i {
-            font-size: 22px;
+            font-size: 20px;
             color: var(--main-green);
         }
 
         .audio-indicator {
             position: absolute;
-            top: -5px;
-            right: -5px;
+            top: -4px;
+            right: -4px;
             background: var(--gold-accent);
             color: white;
-            font-size: 10px;
-            padding: 3px 6px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-size: 9px;
+            padding: 2px 5px;
+            border-radius: 8px;
         }
 
         .nav-card span {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             color: #2c3e50;
         }
 
-        /* الفوتر المحسن */
+        /* الفوتر ليبقى متوافقاً مع الاعلانات في الاسفل */
         .dev-footer {
-            padding: 25px;
+            padding: 20px;
             text-align: center;
-            background: #fff;
-            border-top-left-radius: 30px;
-            border-top-right-radius: 30px;
+            background: transparent;
+            margin-bottom: 20px;
         }
 
         .dev-footer .power {
-            font-size: 11px;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 10px;
+            color: #aaa;
+            letter-spacing: 0.5px;
         }
 
         .dev-footer .brand-name {
             display: block;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 800;
             color: var(--main-green);
-            margin-top: 4px;
+            margin-top: 3px;
         }
 
-        .brand-name span {
-            color: var(--gold-accent);
-        }
+        .brand-name span { color: var(--gold-accent); }
     </style>
 </head>
 <body>
@@ -188,7 +182,6 @@
     </div>
 
     <div class="app-grid">
-        
         <a href="https://ahmedsaleh917.github.io/quran/" class="nav-card">
             <div class="icon-box">
                 <i class="fa-solid fa-book-quran"></i>
@@ -209,7 +202,7 @@
 
         <a href="https://ahmedsaleh917.github.io/akhtbar/" class="nav-card">
             <div class="icon-box"><i class="fa-solid fa-lightbulb"></i></div>
-            <span>اختبر معلوماتك الدينية</span>
+            <span>اختبر معلوماتك</span>
         </a>
 
         <a href="https://ahmedsaleh917.github.io/awkat-alslat/" class="nav-card">
@@ -229,9 +222,8 @@
 
         <a href="https://ahmedsaleh917.github.io/omrah/" class="nav-card">
             <div class="icon-box"><i class="fa-solid fa-kaaba"></i></div>
-            <span>دليل الحج والعمرة</span>
+            <span>دليل العمرة</span>
         </a>
-
     </div>
 
     <div class="dev-footer">
