@@ -2675,13 +2675,295 @@ window.addEventListener('beforeunload', saveGame);
 <!-- 🕌 صفحة الصلاة -->
 <div id="awkat" class="page">
     <div class="back" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i><span>العودة للرئيسية</span></div>
-    <!-- ⬇️️⬇️ ضع كود صفحة الصلاة هنا ⬇️️⬇️ -->
+    <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2d2d2d">
+    <title>صفاء الروح | مواقيت الصلاة والطقس</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-dark: #2d2d2d;
+            --primary-darker: #1a1a1a;
+            --accent-gold: #f4d03f;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; padding-bottom: 220px; color: var(--text-primary);
+        }
+
+        .top-header {
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.98), rgba(26, 26, 26, 0.95));
+            height: 160px; width: 100%; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5); border-bottom: 2px solid var(--accent-gold);
+        }
+
+        .header-title { font-weight: 900; font-size: 1.8rem; color: var(--accent-gold); margin: 5px 0; }
+
+        .main-container { width: 92%; max-width: 480px; margin-top: 25px; display: flex; flex-direction: column; gap: 15px; }
+
+        .info-card {
+            background: var(--card-bg); padding: 20px; border-radius: 22px;
+            box-shadow: var(--shadow); border-right: 6px solid var(--accent-gold); text-align: right;
+            background-color: #2d2d2d;
+        }
+
+        .weather-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 10px; }
+        .weather-temp { font-size: 2.2rem; font-weight: 900; color: var(--accent-gold); }
+
+        .selector-box { background: #2d2d2d; padding: 12px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); }
+        .selector-box select { 
+            width: 100%; border: none; font-family: 'Tajawal'; font-weight: 800;
+            background: rgba(255,255,255,0.05); color: #fff; padding: 12px; border-radius: 10px; outline: none;
+        }
+
+        .countdown-timer {
+            background: linear-gradient(135deg, #2d2d2d, #1a1a1a); 
+            padding: 20px; border-radius: 18px; text-align: center; border: 2px solid var(--accent-gold);
+        }
+        #timer { display: block; color: var(--accent-gold); font-size: 2rem; font-weight: 900; margin-top: 10px; }
+
+        .prayer-list { display: flex; flex-direction: column; gap: 10px; }
+        .prayer-item {
+            background: #2d2d2d; padding: 15px 20px; border-radius: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
+        }
+        .prayer-item.active { border: 2px solid var(--accent-gold); background: rgba(244, 208, 63, 0.1); transform: scale(1.02); }
+
+        .fixed-controls {
+            position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(45, 45, 45, 0.98);
+            padding: 15px; border-top: 3px solid var(--accent-gold); z-index: 1000;
+        }
+        .controls-grid { max-width: 500px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .control-btn {
+            background: #1a1a1a; border: 2px solid rgba(255,255,255,0.1); padding: 12px;
+            border-radius: 12px; color: #fff; font-family: 'Tajawal'; font-weight: 700; cursor: pointer;
+        }
+        .control-btn.active { background: var(--accent-gold); color: #000; }
+
+        .muezzin-panel {
+            display: none; align-items: center; justify-content: center; gap: 10px;
+            max-width: 500px; margin: 10px auto 0; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 12px;
+        }
+
+        .notification {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            background: #2d2d2d; padding: 15px 25px; border-radius: 15px; border-right: 5px solid var(--accent-gold);
+            z-index: 2000; transition: 0.4s; color: #fff;
+        }
+        .notification.show { transform: translateX(-50%) translateY(0); }
+    </style>
+</head>
+<body>
+
+<div id="notification" class="notification"></div>
+
+<div class="top-header">
+    <div class="header-title">✨ صفاء الروح ✨</div>
+    <div id="header-date" style="font-family:'Amiri'; color: var(--text-secondary);">--</div>
+</div>
+
+<div class="main-container">
+    <div class="info-card">
+        <div class="weather-section">
+            <div>
+                <div id="w-temp" class="weather-temp">--°</div>
+                <div id="w-desc" style="color:var(--text-secondary)">جاري التحميل...</div>
+            </div>
+            <i class="fas fa-sun fa-3x" style="color:var(--accent-gold)"></i>
+        </div>
+        <h2 id="info-name" style="color:var(--accent-gold)">مواقيت الصلاة</h2>
+        <p id="info-desc" style="font-size:0.9rem; color:var(--text-secondary)">يرجى اختيار المدينة</p>
+    </div>
+
+    <div class="selector-box">
+        <select id="city-select">
+            <option value="Makkah,SA">مكة المكرمة</option>
+            <option value="Madinah,SA">المدينة المنورة</option>
+            <option value="Jerusalem,PS">القدس الشريف</option>
+            <option value="Ataq,YE">شبوة - عتق</option>
+            <option value="Aden,YE">عدن</option>
+            <option value="Sanaa,YE">صنعاء</option>
+            <option value="Mukalla,YE">المكلا</option>
+            <option value="Riyadh,SA">الرياض</option>
+            <option value="Cairo,EG">القاهرة</option>
+        </select>
+    </div>
+
+    <div class="countdown-timer">
+        باقي على صلاة <span id="next-p-name">--</span>
+        <span id="timer">00:00:00</span>
+    </div>
+
+    <div id="prayer-list" class="prayer-list"></div>
+</div>
+
+<div class="fixed-controls">
+    <div class="controls-grid">
+        <button id="btn-notif" class="control-btn active" onclick="toggleNotif()">🔔 التنبيهات</button>
+        <button id="btn-adhan" class="control-btn" onclick="toggleAdhanUI()">🔊 الأذان</button>
+    </div>
+    <div id="muezzin-panel" class="muezzin-panel">
+        <select id="muezzin-select" style="flex:1; padding:8px; border-radius:8px; background:#1a1a1a; color:#fff; border:1px solid var(--accent-gold);">
+            <option value="qatami">ناصر القطامي</option>
+            <option value="alafasy">مشاري العفاسي</option>
+            <option value="sudais">عبدالرحمن السديس</option>
+        </select>
+    </div>
+</div>
+
+<audio id="adhan-audio"></audio>
+
+<script>
+    const STORAGE_KEY = 'safaa_app_settings';
+    const API_WEATHER = "a51243f7648b764f71f76f6cac8f9995";
+    const MUEZZINS = {
+        qatami: "https://server8.mp3quran.net/atha/Ar-001.mp3",
+        alafasy: "https://server7.mp3quran.net/afs/Ar-001.mp3",
+        sudais: "https://server11.mp3quran.net/sds/Ar-001.mp3"
+    };
+
+    let settings = {
+        city: "Ataq,YE",
+        adhan: false,
+        notif: true,
+        muezzin: "qatami"
+    };
+
+    let prayerTimes = {};
+
+    function showMsg(msg) {
+        const n = document.getElementById('notification');
+        n.textContent = msg; n.classList.add('show');
+        setTimeout(() => n.classList.remove('show'), 3000);
+    }
+
+    // حفظ واسترجاع الإعدادات
+    function saveSettings() { localStorage.setItem(STORAGE_KEY, JSON.stringify(settings)); }
+    function loadSettings() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) settings = JSON.parse(saved);
+        
+        document.getElementById('city-select').value = settings.city;
+        document.getElementById('muezzin-select').value = settings.muezzin;
+        updateButtonsUI();
+    }
+
+    function updateButtonsUI() {
+        document.getElementById('btn-notif').classList.toggle('active', settings.notif);
+        document.getElementById('btn-adhan').classList.toggle('active', settings.adhan);
+        document.getElementById('muezzin-panel').style.display = settings.adhan ? 'flex' : 'none';
+    }
+
+    async function fetchData() {
+        const [city, country] = settings.city.split(',');
+        try {
+            // الطقس
+            const wRes = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_WEATHER}&units=metric&lang=ar`);
+            const wData = await wRes.json();
+            if(wData.main) {
+                document.getElementById('w-temp').textContent = Math.round(wData.main.temp) + "°";
+                document.getElementById('w-desc').textContent = wData.weather[0].description;
+            }
+
+            // المواقيت
+            const pRes = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=4`);
+            const pData = await pRes.json();
+            prayerTimes = pData.data.timings;
+            document.getElementById('header-date').textContent = pData.data.date.hijri.date;
+            document.getElementById('info-name').textContent = "مواقيت " + document.getElementById('city-select').selectedOptions[0].text;
+            renderPrayers();
+        } catch (e) { showMsg("⚠️ تعذر جلب البيانات"); }
+    }
+
+    function renderPrayers() {
+        const list = document.getElementById('prayer-list');
+        list.innerHTML = '';
+        const names = { Fajr: 'الفجر', Dhuhr: 'الظهر', Asr: 'العصر', Maghrib: 'المغرب', Isha: 'العشاء' };
+        
+        Object.entries(names).forEach(([id, name]) => {
+            const item = document.createElement('div');
+            item.className = 'prayer-item';
+            item.id = "p-" + id;
+            item.innerHTML = `<span>${name}</span><b>${prayerTimes[id]}</b>`;
+            list.appendChild(item);
+        });
+    }
+
+    function updateTimer() {
+        if (!prayerTimes.Fajr) return;
+        const now = new Date();
+        const pNames = { Fajr: 'الفجر', Dhuhr: 'الظهر', Asr: 'العصر', Maghrib: 'المغرب', Isha: 'العشاء' };
+        let next = null;
+
+        for (let id in pNames) {
+            const [h, m] = prayerTimes[id].split(':');
+            const pTime = new Date(); pTime.setHours(h, m, 0);
+            if (pTime > now) { next = { id, time: pTime }; break; }
+        }
+
+        if (!next) { // إذا انتهت صلوات اليوم، الانتقال لفجر الغد
+            const [h, m] = prayerTimes.Fajr.split(':');
+            const pTime = new Date(); pTime.setDate(pTime.getDate() + 1); pTime.setHours(h, m, 0);
+            next = { id: 'Fajr', time: pTime };
+        }
+
+        // تمييز الصلاة الحالية
+        document.querySelectorAll('.prayer-item').forEach(i => i.classList.remove('active'));
+        if(document.getElementById('p-'+next.id)) document.getElementById('p-'+next.id).classList.add('active');
+
+        const diff = next.time - now;
+        const hh = Math.floor(diff/3600000).toString().padStart(2,'0');
+        const mm = Math.floor((diff%3600000)/60000).toString().padStart(2,'0');
+        const ss = Math.floor((diff%60000)/1000).toString().padStart(2,'0');
+
+        document.getElementById('timer').textContent = `${hh}:${mm}:${ss}`;
+        document.getElementById('next-p-name').textContent = pNames[next.id];
+
+        // تشغيل الأذان عند الصفر
+        if (diff < 1000 && diff > 0 && settings.adhan) {
+            const audio = document.getElementById('adhan-audio');
+            audio.src = MUEZZINS[settings.muezzin];
+            audio.play();
+            if(settings.notif) showMsg("🕌 حان الآن وقت صلاة " + pNames[next.id]);
+        }
+    }
+
+    function toggleNotif() { settings.notif = !settings.notif; saveSettings(); updateButtonsUI(); }
+    function toggleAdhanUI() { settings.adhan = !settings.adhan; saveSettings(); updateButtonsUI(); }
+
+    document.getElementById('city-select').onchange = (e) => {
+        settings.city = e.target.value;
+        saveSettings(); fetchData();
+    };
+
+    document.getElementById('muezzin-select').onchange = (e) => {
+        settings.muezzin = e.target.value;
+        saveSettings();
+    };
+
+    window.onload = () => {
+        loadSettings();
+        fetchData();
+        setInterval(updateTimer, 1000);
+    };
+</script>
+</body>
+</html>
     
-    <!-- =============================== -->
-    <!-- [ ضع كود صفحة الصلاة هنا ] -->
-    <!-- =============================== -->
-    
-    <!-- ⬆️️⬆️ نهاية كود صفحة الصلاة ⬆️️⬆️ -->
 </div>
 
 <!-- 📿 صفحة المسبحة -->
