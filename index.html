@@ -1,235 +1,432 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>صفاء الروح | التطوير الاحترافي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>صفاء الروح ✦ Modified Edition</title>
 
-    <style>
-        :root {
-            --main-green: #1a4d2e;
-            --gold-accent: #d4af37;
-            --soft-white: #f8fafc;
-            --card-shadow: 0 8px 20px rgba(0,0,0,0.06);
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* ✦ المتغيرات الأساسية - نظام ألوان معدل ✦ */
+:root {
+    --primary-deep: #2d2d2d;
+    --primary-gradient: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 50%, #2d2d2d 100%);
+    --yellow: #ffeb3b; /* اللون الأصفر المطلوب */
+    --yellow-light: #fff59d;
+    --yellow-gradient: linear-gradient(135deg, #fdd835 0%, #ffeb3b 50%, #fbc02d 100%);
+    --bg-dark: #2d2d2d; /* الخلفية الرئيسية المطلوبة */
+    --bg-card: rgba(61, 61, 61, 0.7);
+    --bg-card-hover: rgba(80, 80, 80, 0.9);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.9);
+    --text-muted: rgba(255, 255, 255, 0.7);
+    --card-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); /* ظلال محسنة بذوق */
+    --card-shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.5);
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ✦ الإعدادات الأساسية ✦ */
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { font-family: 'Almarai', 'Tajawal', sans-serif; background: var(--bg-dark); color: var(--text-primary); min-height: 100vh; overflow-x: hidden; position: relative; }
+
+/* ✦ خلفية هادئة ✦ */
+body::before {
+    content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 235, 59, 0.03) 0%, transparent 70%);
+    z-index: -2;
+}
+
+/* ✦ جزيئات صفراء عائمة ✦ */
+.particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; overflow: hidden; }
+.particle {
+    position: absolute; width: 3px; height: 3px; background: var(--yellow);
+    border-radius: 50%; opacity: 0.3; animation: float 20s infinite linear;
+}
+@keyframes float {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.3; } 90% { opacity: 0.3; }
+    100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+}
+
+/* ✦ الهيدر ✦ */
+.header {
+    background: var(--primary-gradient); padding: 45px 25px 35px; text-align: center;
+    position: relative; border-bottom-left-radius: 35px; border-bottom-right-radius: 35px;
+    box-shadow: var(--card-shadow); margin-bottom: 20px; overflow: hidden; z-index: 5;
+    border-bottom: 1px solid rgba(255, 235, 59, 0.1);
+}
+.header-content { position: relative; z-index: 2; }
+.header h2 {
+    font-size: 2rem; font-weight: 900; margin-bottom: 6px;
+    color: var(--yellow); /* اسم صفاء الروح باللون الأصفر */
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); letter-spacing: -0.5px;
+}
+.header p { font-size: 0.95rem; color: var(--text-secondary); font-weight: 400; opacity: 0.95; }
+.header-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(255, 235, 59, 0.1); padding: 4px 12px; border-radius: 18px;
+    margin-top: 10px; border: 1px solid rgba(255, 235, 59, 0.2);
+}
+.header-badge i { color: var(--yellow); font-size: 0.85rem; }
+.header-badge span { font-size: 0.75rem; color: var(--yellow-light); font-weight: 700; }
+
+/* ✦ شبكة الأزرار ✦ */
+.grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+    padding: 0 20px; margin-bottom: 18px; max-width: 480px; margin-left: auto; margin-right: auto;
+}
+
+/* ✦ تصميم البطاقة ✦ */
+.card {
+    background: var(--bg-card); border-radius: 22px; padding: 18px 12px; text-align: center;
+    cursor: pointer; position: relative; overflow: hidden; transition: all var(--transition-normal);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: var(--card-shadow);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 10px; min-height: 125px;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.card:hover {
+    transform: translateY(-5px); background: var(--bg-card-hover);
+    box-shadow: var(--card-shadow-hover);
+    border-color: rgba(255, 235, 59, 0.3);
+}
+.card:active { transform: translateY(-2px) scale(0.98); }
+
+/* ✦ الأيقونات ✦ */
+.card-icon {
+    width: 52px; height: 52px; border-radius: 18px; 
+    background: rgba(255, 235, 59, 0.08);
+    display: flex; align-items: center; justify-content: center; position: relative;
+    transition: all var(--transition-normal); border: 1px solid rgba(255, 235, 59, 0.15);
+}
+.card-icon i {
+    font-size: 1.4rem;
+    color: var(--yellow); /* الأيقونات باللون الأصفر */
+    transition: all var(--transition-fast);
+}
+.card:hover .card-icon { transform: scale(1.1); background: rgba(255, 235, 59, 0.15); }
+
+/* ✦ نصوص البطاقة ✦ */
+.card-title { font-weight: 800; font-size: 0.98rem; color: var(--text-primary); transition: color var(--transition-fast); }
+.card:hover .card-title { color: var(--yellow); } /* نصوص الأزرار تصبح صفراء عند التحويم */
+.card-subtitle { font-size: 0.7rem; color: var(--text-muted); font-weight: 400; opacity: 0.8; }
+
+/* ✦ تأثير الوميض ✦ */
+.card .ripple {
+    position: absolute; border-radius: 50%;
+    background: rgba(255, 235, 59, 0.2);
+    transform: scale(0); animation: ripple-effect 0.6s ease-out forwards; pointer-events: none;
+}
+@keyframes ripple-effect { to { transform: scale(3.5); opacity: 0; } }
+
+/* ✦ الفوتر ✦ */
+.footer { text-align: center; padding: 22px 20px 32px; position: relative; }
+.footer-content {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: rgba(255, 255, 255, 0.03); padding: 9px 20px; border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.footer-text { font-size: 0.82rem; color: var(--text-muted); }
+.footer-developer { color: var(--yellow); font-weight: 800; font-size: 0.88rem; display: flex; align-items: center; gap: 4px; }
+.footer-developer i { font-size: 0.75rem; animation: heartbeat 2s ease-in-out infinite; }
+@keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+
+/* ✦ الصفحات الداخلية ✦ */
+.page {
+    display: none; padding: 20px; min-height: 100vh; background: var(--bg-dark);
+    animation: pageFadeIn 0.4s ease-out; position: relative;
+}
+@keyframes pageFadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ✦ زر الرجوع ✦ */
+.back {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(255, 235, 59, 0.1);
+    color: var(--yellow); padding: 11px 22px; border-radius: 13px;
+    font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: all var(--transition-normal);
+    border: 1px solid rgba(255, 235, 59, 0.2); margin-bottom: 22px;
+}
+.back:hover { background: rgba(255, 235, 59, 0.15); transform: translateX(5px); }
+
+/* ✦ مؤشر التحميل ✦ */
+.loader { width: 38px; height: 38px; border: 3px solid rgba(255, 235, 59, 0.1); border-top-color: var(--yellow); border-radius: 50%; animation: spin 1s linear infinite; margin: 20px auto; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ✦ تنبيه عدم الاتصال ✦ */
+.offline-alert {
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
+    background: #333; color: var(--yellow);
+    padding: 11px 23px; border-radius: 13px; font-size: 0.88rem; font-weight: 700;
+    display: flex; align-items: center; gap: 9px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    z-index: 1000; transition: transform var(--transition-normal); border: 1px solid var(--yellow);
+}
+.offline-alert.show { transform: translateX(-50%) translateY(0); }
+
+/* ✦ تحسينات الجوال ✦ */
+@media (max-width: 480px) {
+    .header { padding: 38px 18px 32px; }
+    .header h2 { font-size: 1.85rem; }
+    .grid { gap: 14px; padding: 0 16px; }
+    .card { padding: 16px 10px; min-height: 118px; }
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--yellow); border-radius: 3px; opacity: 0.5; }
+</style>
+
+<script>
+function openPage(pageId, onlineURL, element) {
+    const ripple = document.createElement('span');
+    ripple.classList.add('ripple');
+    element.appendChild(ripple);
+    const rect = element.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    ripple.style.width = ripple.style.height = `${size * 2}px`;
+    ripple.style.left = `${x - size}px`;
+    ripple.style.top = `${y - size}px`;
+
+    ripple.addEventListener('animationend', () => {
+        ripple.remove();
+        if (navigator.onLine) {
+            document.body.style.opacity = '0.7';
+            setTimeout(() => { window.location.href = onlineURL; }, 200);
+            return;
         }
+        showOfflineAlert();
+        document.getElementById("home").style.display = "none";
+        document.querySelectorAll(".page").forEach(p => { p.style.display = "none"; p.style.opacity = "0"; });
+        const targetPage = document.getElementById(pageId);
+        targetPage.style.display = "block";
+        setTimeout(() => { targetPage.style.opacity = "1"; }, 50);
+    });
+}
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Almarai', sans-serif;
-            background-color: var(--soft-white);
-            color: #333;
-            overflow-x: hidden; /* لمنع المشاكل في WebView */
-            -webkit-tap-highlight-color: transparent; /* إزالة اللون الأزرق عند اللمس */
-        }
+function goHome() {
+    document.querySelectorAll(".page").forEach(p => {
+        p.style.opacity = "0";
+        setTimeout(() => { p.style.display = "none"; }, 300);
+    });
+    document.getElementById("home").style.display = "contents";
+    document.body.style.opacity = "1";
+}
 
-        /* الهيدر المحسن */
-        .header-container {
-            height: 220px;
-            background: linear-gradient(rgba(26, 77, 46, 0.6), rgba(26, 77, 46, 0.4)), 
-                        url('https://i.postimg.cc/zvS6s80G/IMG-20260404-200653.jpg') center/cover;
-            position: relative;
-            border-bottom-left-radius: 45px;
-            border-bottom-right-radius: 45px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+function showOfflineAlert() {
+    let alert = document.getElementById('offlineAlert');
+    if (!alert) {
+        alert = document.createElement('div');
+        alert.id = 'offlineAlert';
+        alert.className = 'offline-alert';
+        alert.innerHTML = '<i class="fa-solid fa-wifi-slash"></i><span>يعمل التطبيق بدون إنترنت</span>';
+        document.body.appendChild(alert);
+    }
+    alert.classList.add('show');
+    setTimeout(() => alert.classList.remove('show'), 3000);
+}
 
-        .logo-wrapper {
-            position: absolute;
-            bottom: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-        }
+function createParticles() {
+    const container = document.querySelector('.particles');
+    if (!container) return;
+    for (let i = 0; i < 7; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 10 + 's';
+        particle.style.animationDuration = (20 + Math.random() * 15) + 's';
+        container.appendChild(particle);
+    }
+}
 
-        .main-logo {
-            width: 90px;
-            height: 90px;
-            background: #fff;
-            border-radius: 22px;
-            padding: 5px;
-            box-shadow: 0 12px 25px rgba(0,0,0,0.12);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid #fff;
-        }
+document.addEventListener('DOMContentLoaded', () => {
+    createParticles();
+    document.querySelectorAll('.card').forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, 200 + index * 80);
+    });
+});
+</script>
 
-        .main-logo img {
-            width: 85%;
-            border-radius: 18px;
-        }
-
-        .brand-section {
-            text-align: center;
-            margin-top: 55px;
-            margin-bottom: 25px;
-        }
-
-        .brand-section h1 {
-            font-size: 22px;
-            font-weight: 800;
-            color: var(--main-green);
-            margin: 0;
-        }
-
-        .brand-section p {
-            font-size: 13px;
-            color: #777;
-            margin-top: 4px;
-        }
-
-        /* شبكة الأقسام المعدلة لسكتشوير */
-        .app-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            padding: 0 15px 30px 15px;
-        }
-
-        .nav-card {
-            background: #fff;
-            border-radius: 18px;
-            padding: 18px 8px;
-            text-align: center;
-            text-decoration: none;
-            transition: 0.2s ease;
-            box-shadow: var(--card-shadow);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .nav-card:active {
-            transform: scale(0.96);
-            background: #fdfdfd;
-        }
-
-        .icon-box {
-            width: 45px;
-            height: 45px;
-            background: rgba(26, 77, 46, 0.06);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            position: relative;
-        }
-
-        .icon-box i {
-            font-size: 20px;
-            color: var(--main-green);
-        }
-
-        .audio-indicator {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            background: var(--gold-accent);
-            color: white;
-            font-size: 9px;
-            padding: 2px 5px;
-            border-radius: 8px;
-        }
-
-        .nav-card span {
-            font-size: 12px;
-            font-weight: 700;
-            color: #2c3e50;
-        }
-
-        /* الفوتر ليبقى متوافقاً مع الاعلانات في الاسفل */
-        .dev-footer {
-            padding: 20px;
-            text-align: center;
-            background: transparent;
-            margin-bottom: 20px;
-        }
-
-        .dev-footer .power {
-            font-size: 10px;
-            color: #aaa;
-            letter-spacing: 0.5px;
-        }
-
-        .dev-footer .brand-name {
-            display: block;
-            font-size: 13px;
-            font-weight: 800;
-            color: var(--main-green);
-            margin-top: 3px;
-        }
-
-        .brand-name span { color: var(--gold-accent); }
-    </style>
 </head>
 <body>
 
-    <div class="header-container">
-        <div class="logo-wrapper">
-            <div class="main-logo">
-                <img src="https://i.postimg.cc/05cL5zw5/20260405-135743.png" alt="Logo">
+<div class="particles"></div>
+
+<div id="offlineAlert" class="offline-alert">
+    <i class="fa-solid fa-wifi-slash"></i>
+    <span>يعمل التطبيق بدون إنترنت</span>
+</div>
+
+<div id="home" style="display: contents;">
+    <div class="header">
+        <div class="header-content">
+            <h2>✨ صفاء الروح ✨</h2>
+            <p>طمأنينة تقربك من الله في كل لحظة</p>
+            <div class="header-badge">
+                <i class="fa-solid fa-star"></i>
+                <span>إصدار Plus المطور</span>
             </div>
         </div>
     </div>
 
-    <div class="brand-section">
-        <h1>صفاء الروح</h1>
-        <p>مساحتك الروحية للذكر والهدوء</p>
+    <div class="grid">
+        <div class="card" onclick="openPage('quran','https://ahmedsaleh917.github.io/quran/', this)">
+            <div class="card-icon"><i class="fa-solid fa-book-quran"></i></div>
+            <span class="card-title">القرآن الكريم</span>
+            <span class="card-subtitle">تلاوة وتدبر</span>
+        </div>
+        <div class="card" onclick="openPage('azkar','https://ahmedsaleh917.github.io/azkar/', this)">
+            <div class="card-icon"><i class="fa-solid fa-hands-praying"></i></div>
+            <span class="card-title">أذكار المسلم</span>
+            <span class="card-subtitle">صباح ومساء</span>
+        </div>
+        <div class="card" onclick="openPage('ruqia','https://ahmedsaleh917.github.io/ruqia/', this)">
+            <div class="card-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <span class="card-title">الرقية الشرعية</span>
+            <span class="card-subtitle">حفظ وعلاج</span>
+        </div>
+        <div class="card" onclick="openPage('akhtbar','https://ahmedsaleh917.github.io/akhtbar/', this)">
+            <div class="card-icon"><i class="fa-solid fa-clipboard-question"></i></div>
+            <span class="card-title">اختبار ثقافي</span>
+            <span class="card-subtitle">تحدي ومعرفة</span>
+        </div>
+        <div class="card" onclick="openPage('awkat','https://ahmedsaleh917.github.io/awkat-alslat/', this)">
+            <div class="card-icon"><i class="fa-solid fa-mosque"></i></div>
+            <span class="card-title">مواقيت الصلاة</span>
+            <span class="card-subtitle">دقة وتنبيه</span>
+        </div>
+        <div class="card" onclick="openPage('msbaha','https://ahmedsaleh917.github.io/msbaha/', this)">
+            <div class="card-icon"><i class="fa-solid fa-repeat"></i></div>
+            <span class="card-title">المسبحة الإلكترونية</span>
+            <span class="card-subtitle">تسبيح وعدّ</span>
+        </div>
+        <div class="card" onclick="openPage('ahlam','https://ahmedsaleh917.github.io/ahlam/', this)">
+            <div class="card-icon"><i class="fa-solid fa-moon"></i></div>
+            <span class="card-title">تفسير الأحلام</span>
+            <span class="card-subtitle">رؤى ومعاني</span>
+        </div>
+        <div class="card" onclick="openPage('omrah','https://ahmedsaleh917.github.io/omrah/', this)">
+            <div class="card-icon"><i class="fa-solid fa-kaaba"></i></div>
+            <span class="card-title">مناسك العمرة</span>
+            <span class="card-subtitle">خطوة بخطوة</span>
+        </div>
     </div>
 
-    <div class="app-grid">
-        <a href="https://ahmedsaleh917.github.io/quran/" class="nav-card">
-            <div class="icon-box">
-                <i class="fa-solid fa-book-quran"></i>
-                <div class="audio-indicator"><i class="fa-solid fa-headphones"></i></div>
-            </div>
-            <span>القرآن الكريم</span>
-        </a>
-
-        <a href="https://ahmedsaleh917.github.io/azkar/" class="nav-card">
-            <div class="icon-box"><i class="fa-solid fa-hands-praying"></i></div>
-            <span>الأذكار</span>
-        </a>
-
-        <a href="https://ahmedsaleh917.github.io/ruqia/" class="nav-card">
-            <div class="icon-box"><i class="fa-solid fa-shield-heart"></i></div>
-            <span>الرقية الشرعية</span>
-        </a>
-
-        <a href="https://ahmedsaleh917.github.io/akhtbar/" class="nav-card">
-            <div class="icon-box"><i class="fa-solid fa-lightbulb"></i></div>
-            <span>اختبر معلوماتك</span>
-        </a>
-
-        <a href="https://ahmedsaleh917.github.io/awkat-alslat/" class="nav-card">
-            <div class="icon-box"><i class="fa-solid fa-mosque"></i></div>
-            <span>أوقات الصلاة</span>
-        </a>
-
-        <a href="https://ahmedsaleh917.github.io/msbaha/" class="nav-card">
-            <div class="icon-box"><i class="fa-solid fa-circle-dot"></i></div>
-            <span>مسبحة إلكترونية</span>
-        </a>
-
-        <a href="https://ahmedsaleh917.github.io/ahlam/" class="nav-card">
-            <div class="icon-box"><i class="fa-solid fa-cloud-moon"></i></div>
-            <span>تفسير الأحلام</span>
-        </a>
-
-        <a href="https://ahmedsaleh917.github.io/omrah/" class="nav-card">
-            <div class="icon-box"><i class="fa-solid fa-kaaba"></i></div>
-            <span>دليل العمرة</span>
-        </a>
+    <div class="footer">
+        <div class="footer-content">
+            <span class="footer-text">تطوير</span>
+            <span class="footer-developer"><i class="fa-solid fa-heart"></i> sabriFX</span>
+        </div>
     </div>
+</div>
 
-    <div class="dev-footer">
-        <span class="power">Powered by</span>
-        <span class="brand-name">تطوير <span>sabriFX</span></span>
-    </div>
+<!-- ✦ الصفحات الداخلية - أماكن مخصصة لأكوادك ✦ -->
+
+<!-- 📖 صفحة القرآن -->
+<div id="quran" class="page">
+    <div class="back" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i><span>العودة للرئيسية</span></div>
+    <!-- ⬇️️⬇️ ضع كود صفحة القرآن هنا ⬇️️⬇️ -->
+    
+    <!-- =============================== -->
+    <!-- [ ضع كود صفحة القرآن هنا ] -->
+    <!-- =============================== -->
+    
+    <!-- ⬆️️⬆️ نهاية كود صفحة القرآن ⬆️️⬆️ -->
+</div>
+
+<!-- 🤲 صفحة الأذكار -->
+<div id="azkar" class="page">
+    <div class="back" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i><span>العودة للرئيسية</span></div>
+    <!-- ⬇️⬇️⬇️ ضع كود صفحة الأذكار هنا ⬇️⬇️⬇️ -->
+    
+    <!-- =============================== -->
+    <!-- [ ضع كود صفحة الأذكار هنا ] -->
+    <!-- =============================== -->
+    
+    <!-- ⬆️️⬆️ نهاية كود صفحة الأذكار ⬆️️⬆️ -->
+</div>
+
+<!-- 🛡️ صفحة الرقية -->
+<div id="ruqia" class="page">
+    <div class="back" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i><span>العودة للرئيسية</span></div>
+    <!-- ⬇️⬇️⬇️ ضع كود صفحة الرقية هنا ⬇️⬇️⬇️ -->
+    
+    <!-- =============================== -->
+    <!-- [ ضع كود صفحة الرقية هنا ] -->
+    <!-- =============================== -->
+    
+    <!-- ⬆️️⬆️ نهاية كود صفحة الرقية ⬆️️⬆️ -->
+</div>
+
+<!-- 🧠 صفحة الاختبار -->
+<div id="akhtbar" class="page">
+    <div class="back" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i><span>العودة للرئيسية</span></div>
+    <!-- ⬇️️⬇️ ضع كود صفحة الاختبار هنا ⬇️⬇️⬇️ -->
+    
+    <!-- =============================== -->
+    <!-- [ ضع كود صفحة الاختبار هنا ] -->
+    <!-- =============================== -->
+    
+    <!-- ⬆️️⬆️ نهاية كود صفحة الاختبار ⬆️️⬆️ -->
+</div>
+
+<!-- 🕌 صفحة الصلاة -->
+<div id="awkat" class="page">
+    <div class="back" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i><span>العودة للرئيسية</span></div>
+    <!-- ⬇️️⬇️ ضع كود صفحة الصلاة هنا ⬇️️⬇️ -->
+    
+    <!-- =============================== -->
+    <!-- [ ضع كود صفحة الصلاة هنا ] -->
+    <!-- =============================== -->
+    
+    <!-- ⬆️️⬆️ نهاية كود صفحة الصلاة ⬆️️⬆️ -->
+</div>
+
+<!-- 📿 صفحة المسبحة -->
+<div id="msbaha" class="page">
+    <div class="back" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i><span>العودة للرئيسية</span></div>
+    <!-- ⬇️⬇️⬇️ ضع كود صفحة المسبحة هنا ⬇️⬇️⬇️ -->
+    
+    <!-- =============================== -->
+    <!-- [ ضع كود صفحة المسبحة هنا ] -->
+    <!-- =============================== -->
+    
+    <!-- ⬆️️⬆️ نهاية كود صفحة المسبحة ⬆️️⬆️ -->
+</div>
+
+<!-- 🌙 صفحة الأحلام -->
+<div id="ahlam" class="page">
+    <div class="back" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i><span>العودة للرئيسية</span></div>
+    <!-- ⬇️⬇️⬇️ ضع كود صفحة الأحلام هنا ⬇️️⬇️ -->
+    
+    <!-- =============================== -->
+    <!-- [ ضع كود صفحة الأحلام هنا ] -->
+    <!-- =============================== -->
+    
+    <!-- ⬆️️⬆️ نهاية كود صفحة الأحلام ⬆️⬆️⬆️ -->
+</div>
+
+<!-- 🕋 صفحة العمرة -->
+<div id="omrah" class="page">
+    <div class="back" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i><span>العودة للرئيسية</span></div>
+    <!-- ⬇️️⬇️ ضع كود صفحة العمرة هنا ⬇️️⬇️ -->
+    
+    <!-- =============================== -->
+    <!-- [ ضع كود صفحة العمرة هنا ] -->
+    <!-- =============================== -->
+    
+    <!-- ⬆️️⬆️ نهاية كود صفحة العمرة ⬆️️⬆️ -->
+</div>
 
 </body>
 </html>
