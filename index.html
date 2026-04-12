@@ -335,13 +335,223 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- 📖 صفحة القرآن -->
 <div id="quran" class="page">
     <div class="back" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i><span>العودة للرئيسية</span></div>
-    <!-- ⬇️️⬇️ ضع كود صفحة القرآن هنا ⬇️️⬇️ -->
+    <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>القرآن الكريم | صفاء الروح</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #121212;
+            --bg-card: #1e1e1e;
+            --accent-yellow: #ffcc00; 
+            --text-white: #ffffff;
+            --text-gray: #888888;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--bg-main);
+            font-family: 'Tajawal', sans-serif;
+            color: var(--text-white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 1000px; 
+            overflow-x: hidden;
+        }
+
+        .app-header {
+            width: 100%;
+            background: linear-gradient(180deg, #252525 0%, var(--bg-main) 100%);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            margin-bottom: 25px;
+        }
+
+        .main-title {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--accent-yellow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .subtitle {
+            color: var(--text-white);
+            font-size: 0.95rem;
+            margin-top: 8px;
+            opacity: 0.8;
+        }
+
+        .player-container {
+            width: 92%;
+            max-width: 450px;
+            background: var(--bg-card);
+            padding: 15px 20px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid #2a2a2a;
+        }
+
+        .now-playing {
+            text-align: center;
+            margin-bottom: 12px;
+            color: var(--accent-yellow);
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        audio { 
+            width: 100%; 
+            height: 35px; 
+            filter: invert(0.9) hue-rotate(180deg) brightness(1.2);
+        }
+
+        /* شبكة السور بحجم أصغر (النصف تقريباً) */
+        .surah-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* زيادة عدد الأعمدة لتقليل الحجم */
+            gap: 12px;
+            width: 94%;
+            max-width: 600px;
+            padding-bottom: 50px;
+        }
+
+        .surah-item {
+            background: var(--bg-card);
+            border-radius: 18px;
+            padding: 15px 8px; /* تقليل الحشو الداخلي */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: all 0.2s ease;
+            box-shadow: var(--card-shadow);
+            cursor: pointer;
+            border: 1px solid #252525;
+            min-height: 100px; /* تحديد ارتفاع أصغر */
+        }
+
+        .surah-item:active {
+            transform: scale(0.94);
+            background: #252525;
+        }
+
+        .surah-item i.main-icon {
+            font-size: 1.4rem; /* تصغير الأيقونة */
+            color: var(--accent-yellow);
+            margin-bottom: 8px;
+            background: rgba(255, 204, 0, 0.08);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+
+        .surah-item .name {
+            font-size: 0.85rem; /* تصغير الخط */
+            font-weight: 700;
+            color: var(--text-white);
+            margin-bottom: 2px;
+        }
+
+        .surah-item .meta {
+            font-size: 0.65rem; /* تصغير الخط الفرعي */
+            color: var(--text-gray);
+        }
+
+        .loader {
+            display: none;
+            border: 2px solid #333;
+            border-top: 2px solid var(--accent-yellow);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        @media (max-width: 450px) {
+            .surah-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+            .main-title { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="main-title">✨ صفاء الروح ✨</div>
+        <div class="subtitle">طمأنينة تقربك من الله في كل لحظة</div>
+    </header>
+
+    <div class="player-container">
+        <div id="loader" class="loader"></div>
+        <div class="now-playing" id="track-title">اختر سورة 🎧</div>
+        <audio id="audio-player" controls preload="none"></audio>
+    </div>
+
+    <div class="surah-grid" id="grid"></div>
+
+    <script>
+        const surahs = [
+            "الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"
+        ];
+
+        const grid = document.getElementById('grid');
+        const audio = document.getElementById('audio-player');
+        const trackTitle = document.getElementById('track-title');
+        const loader = document.getElementById('loader');
+
+        function renderGrid() {
+            surahs.forEach((name, i) => {
+                const num = (i + 1).toString().padStart(3, '0');
+                const card = document.createElement('div');
+                card.className = 'surah-item';
+                card.innerHTML = `
+                    <i class="fas fa-book-quran main-icon"></i>
+                    <div class="name">${name}</div>
+                    <div class="meta">تلاوة</div>
+                `;
+                card.onclick = () => playSurah(num, name);
+                grid.appendChild(card);
+            });
+        }
+
+        async function playSurah(num, name) {
+            const url = `https://server12.mp3quran.net/maher/${num}.mp3`;
+            trackTitle.innerText = "جاري التحميل...";
+            loader.style.display = "block";
+            audio.src = url;
+            try {
+                await audio.play();
+                trackTitle.innerText = "🔊 سورة " + name;
+            } catch (e) {
+                trackTitle.innerText = "⚠️ خطأ";
+            } finally {
+                loader.style.display = "none";
+            }
+        }
+        renderGrid();
+    </script>
+</body>
+</html>
     
-    <!-- =============================== -->
-    <!-- [ ضع كود صفحة القرآن هنا ] -->
-    <!-- =============================== -->
-    
-    <!-- ⬆️️⬆️ نهاية كود صفحة القرآن ⬆️️⬆️ -->
 </div>
 
 <!-- 🤲 صفحة الأذكار -->
