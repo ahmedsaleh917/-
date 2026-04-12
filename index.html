@@ -1731,14 +1731,7 @@ border-radius:18px;font-weight:700;font-size:10px;z-index:2000
 </head>
 <body>
 
-<!-- 🚫 Offline -->
-<div id="offline-page">
-    <div class="offline-container">
-        <i class="fas fa-wifi-slash" style="font-size:36px;color:var(--primary-gold);margin-bottom:12px"></i>
-        <h2>لا يوجد اتصال</h2>
-        <p>قسم الرقية يعمل دون إنترنت. اقرأ الآيات والأدعية في أي وقت.</p>
-        <button class="retry-btn" onclick="checkConnection()">🔄 حاول مجدداً</button>
-    </div>
+<div>
 </div>
 
 <!-- 🕌 Header -->
@@ -2098,13 +2091,585 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'||(e.altKey&&e.key===
 <!-- 🧠 صفحة الاختبار -->
 <div id="akhtbar" class="page">
     <div class="back" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i><span>العودة للرئيسية</span></div>
-    <!-- ⬇️️⬇️ ضع كود صفحة الاختبار هنا ⬇️⬇️⬇️ -->
+    <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>صفاء الروح - sabriFX Edition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap');
+
+        :root {
+            --primary: #2d2d2d; --primary-dark: #1a1a1a; --gold: #f4d03f; --gold-light: #ffd700;
+            --bg: #1a1a1a; --white: #2d2d2d; --text: #ffffff; --text-secondary: #b0b0b0;
+            --danger: #e74c3c; --correct: #2ecc71;
+            --shadow: 0 8px 32px rgba(0,0,0,0.5); --shadow-gold: 0 6px 24px rgba(244, 208, 63, 0.3);
+            --border-radius: 18px; --border-radius-sm: 12px;
+            --font-size-base: 14px;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; transition: background-color 0.3s ease, color 0.3s ease; }
+        body { 
+            font-family: 'Tajawal', sans-serif; 
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+            user-select: none; 
+            color: var(--text); 
+            min-height: 100vh; 
+            margin: 0; padding: 0; 
+            overflow-x: hidden; 
+            font-size: var(--font-size-base);
+            text-align: center;
+        }
+
+        .loading { 
+            position: fixed; 
+            inset: 0; 
+            background: var(--bg); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 10000; 
+        }
+        .loading.hidden { 
+            opacity: 0; 
+            pointer-events: none; 
+            display: none;
+        }
+        .loading-spinner { 
+            width: 50px; 
+            height: 50px;             border: 4px solid rgba(244,208,63,0.2); 
+            border-top-color: var(--gold); 
+            border-radius: 50%; 
+            animation: spin 1s linear infinite; 
+            margin-bottom: 15px; 
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text { color: var(--gold); font-weight: 700; font-size: 16px; }
+
+        .game-header {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.98), rgba(45, 45, 45, 0.95));
+            min-height: 220px;
+            border-radius: 0 0 50px 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid rgba(244, 208, 63, 0.2);
+        }
+
+        .top-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .back-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--gold);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .header-title {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--gold);
+            margin: 10px 0 0;            text-shadow: 0 2px 8px rgba(244,208,63,0.3);
+        }
+
+        .header-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+        
+        .stats-bar { width: 100%; max-width: 460px; display: flex; justify-content: space-around; margin-top: 15px; gap: 5px; }
+        .stat-box { text-align: center; background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 12px; min-width: 70px; border: 1px solid rgba(255,255,255,0.1); }
+        .stat-box i { color: var(--gold); font-size: 16px; margin-bottom: 4px; display: block; }
+        .stat-val { display: block; font-weight: 800; font-size: 16px; color: white; }
+        .stat-label { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
+        .rank-display { text-align: center; margin-top: 10px; background: rgba(244,208,63,0.15); padding: 6px 20px; border-radius: 18px; border: 1px solid rgba(244,208,63,0.3); }
+        .rank-name { font-weight: 800; font-size: 14px; color: var(--gold); }
+        .progress-bar { width: 100%; max-width: 460px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 8px; margin-top: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 8px; transition: width 0.5s ease; width: 0%; }
+
+        .map-container { padding: 20px 15px; display: flex; flex-direction: column; align-items: center; gap: 15px; padding-bottom: 100px; max-width: 600px; margin: 0 auto; }
+        .level-node { width: 100%; max-width: 420px; background: var(--white); padding: 18px 20px; border-radius: var(--border-radius); display: flex; align-items: center; gap: 15px; box-shadow: var(--shadow); cursor: pointer; transition: all 0.3s; border: 2px solid transparent; position: relative; }
+        .level-node::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+        .level-node.locked { opacity: 0.6; filter: grayscale(0.7); cursor: not-allowed; }
+        .level-node.active { border-color: var(--gold); transform: scale(1.02); box-shadow: var(--shadow-gold); }
+        .level-node.completed { border-color: var(--correct); }
+        .node-icon { width: 55px; height: 55px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); border-radius: 16px; display: flex; align-items: center; justify-content: center; color: #1a1a1a; font-size: 22px; flex-shrink: 0; }
+        .node-info { flex: 1; text-align: right; }
+        .node-info h3 { margin: 0 0 5px 0; font-size: 16px; font-weight: 800; color: var(--text); }
+        .node-info span { font-size: 12px; color: var(--text-secondary); }
+        .node-meta { display: flex; gap: 8px; margin-top: 5px; }
+        .node-meta span { font-size: 10px; color: var(--gold); background: rgba(244,208,63,0.1); padding: 2px 6px; border-radius: 6px; }
+        .lock-icon { color: var(--text-secondary); font-size: 18px; }
+        .completed-icon { color: var(--correct); font-size: 20px; }
+
+        .quiz-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 200; display: none; flex-direction: column; }
+        .quiz-header { background: linear-gradient(135deg, #2d2d2d, #1a1a1a); color: white; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid rgba(244,208,63,0.2); }
+        .quiz-body { padding: 20px 15px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; }
+
+        .question-card { background: var(--white); width: 100%; max-width: 520px; padding: 25px 20px; border-radius: var(--border-radius); box-shadow: var(--shadow); margin-bottom: 20px; position: relative; border: 1px solid rgba(255,255,255,0.1); }
+        .question-number { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #1a1a1a; padding: 4px 18px; border-radius: 14px; font-weight: 800; font-size: 13px; }
+        .question-card h2 { font-size: 18px; line-height: 1.6; color: var(--text); margin: 10px 0 0; font-weight: 800; }
+
+        .options-container { width: 100%; max-width: 520px; }
+        .option-item { background: rgba(255,255,255,0.05); padding: 16px 20px; border-radius: 12px; margin-bottom: 10px; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); font-weight: 700; font-size: 14px; color: var(--text); transition: all 0.2s; }
+        .option-item:hover { border-color: var(--gold); background: rgba(244,208,63,0.1); }
+        .option-item.correct { background: rgba(46, 204, 113, 0.2); border-color: var(--correct); color: var(--correct); }
+        .option-item.wrong { background: rgba(231, 76, 60, 0.2); border-color: var(--danger); color: var(--danger); }
+        .info-box { background: linear-gradient(135deg, rgba(244,208,63,0.1), rgba(244,208,63,0.05)); border-right: 3px solid var(--gold); padding: 15px; border-radius: 12px; margin-top: 15px; width: 100%; max-width: 520px; display: none; font-size: 13px; border: 1px solid rgba(244,208,63,0.2); }
+        .info-box strong { color: var(--gold); display: block; margin-bottom: 5px; font-size: 14px; }
+
+        .btn-next { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #1a1a1a; border: none; padding: 15px 30px; width: 100%; max-width: 520px; border-radius: 12px; font-weight: 800; font-size: 16px; margin-top: 20px; cursor: pointer; display: none; }
+        
+        .result-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 300; display: none; justify-content: center; align-items: center; }
+        .win-card { background: var(--white); padding: 30px 25px; border-radius: var(--border-radius); text-align: center; max-width: 400px; width: 90%; border: 2px solid rgba(244,208,63,0.3); }
+        .win-card i { font-size: 60px; color: var(--gold); margin-bottom: 15px; }
+        .win-card h1 { margin: 0 0 10px 0; color: var(--text); font-size: 24px; }
+        .points-earned { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #1a1a1a; padding: 10px 25px; border-radius: 20px; font-weight: 800; font-size: 16px; display: inline-block; margin: 15px 0; }
+
+        .footer-brand { position: fixed; bottom: 0; width: 100%; background: linear-gradient(135deg, rgba(45,45,45,0.98), rgba(26,26,26,0.98)); padding: 12px 20px; text-align: center; border-top: 1px solid rgba(244,208,63,0.2); z-index: 50; font-size: 13px; }
+        .footer-brand strong { color: var(--gold); }
+
+        .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--white); padding: 12px 24px; border-radius: 12px; font-weight: 700; z-index: 500; opacity: 0; transition: transform 0.3s ease; border: 1px solid rgba(255,255,255,0.1); }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .toast.success { border-right: 4px solid var(--correct); color: var(--correct); }
+        .toast.error { border-right: 4px solid var(--danger); color: var(--danger); }
+
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal-card { background: var(--white); padding: 30px; border-radius: var(--border-radius); max-width: 380px; width: 90%; text-align: center; border: 2px solid rgba(244,208,63,0.3); }
+
+        .save-indicator { position: fixed; top: 20px; right: 20px; background: rgba(244,208,63,0.9); color: #1a1a1a; padding: 6px 14px; border-radius: 18px; font-size: 11px; z-index: 1000; opacity: 0; transition: 0.3s; font-weight: 700; }
+        .save-indicator.show { opacity: 1; }
+    </style>
+</head>
+<body>
+
+<div class="loading" id="loadingScreen">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">جاري التحميل...</div>
+</div>
+
+<div class="save-indicator" id="saveIndicator"><i class="fas fa-check"></i> تم الحفظ</div>
+
+<div class="modal-overlay" id="resumeModal">
+    <div class="modal-card">
+        <div style="font-size:40px; color:var(--gold); margin-bottom:15px;"><i class="fas fa-history"></i></div>
+        <h2 style="color:var(--text); margin:0 0 10px 0; font-size:20px;">استكمال التقدم</h2>
+        <p style="color:var(--text-secondary); margin-bottom:20px; font-size:14px;">وجدنا مرحلة غير مكتملة.<br>هل تريد المتابعة؟</p>
+        <div style="display:flex; gap:10px; justify-content:center;">
+            <button onclick="resumeGame()" style="background:var(--gold); color:#1a1a1a; padding:10px 20px; border-radius:12px; border:none; font-weight:700; cursor:pointer;">نعم</button>
+            <button onclick="cancelResume()" style="background:rgba(255,255,255,0.1); color:var(--text); padding:10px 20px; border-radius:12px; border:1px solid rgba(255,255,255,0.2); font-weight:700; cursor:pointer;">لا</button>
+        </div>
+    </div>
+</div>
+
+<header class="game-header">
+    <div class="top-controls">
+        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i></button>    </div>
     
-    <!-- =============================== -->
-    <!-- [ ضع كود صفحة الاختبار هنا ] -->
-    <!-- =============================== -->
+    <h1 class="header-title">✨ صفاء الروح ✨</h1>
+    <p class="header-subtitle">طمأنينة تقربك من الله في كل لحظة</p>
     
-    <!-- ⬆️️⬆️ نهاية كود صفحة الاختبار ⬆️️⬆️ -->
+    <div class="stats-bar">
+        <div class="stat-box"><i class="fas fa-heart"></i><span class="stat-val" id="livesCont">30</span><span class="stat-label">قلوب</span></div>
+        <div class="stat-box"><i class="fas fa-star"></i><span class="stat-val" id="pointsCont">0</span><span class="stat-label">نقاط</span></div>
+        <div class="stat-box"><i class="fas fa-medal"></i><span class="stat-val" id="rankName">مبتدئ</span><span class="stat-label">رتبة</span></div>
+    </div>
+    <div class="rank-display"><span class="rank-name" id="rankDisplay">🌱 مبتدئ</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="rankProgress"></div></div>
+</header>
+
+<div class="map-container" id="gameMap"></div>
+
+<div class="quiz-overlay" id="quizOverlay">
+    <div class="quiz-header">
+        <button onclick="closeQuiz()" style="background:none; border:none; color:var(--gold); font-size:22px; cursor:pointer;"><i class="fas fa-times"></i></button>
+        <h2 id="stageTitle" style="margin:0; font-size:16px; font-weight:800; color:var(--text);">المرحلة</h2>
+        <div style="width:40px; font-weight:700; color:var(--gold);" id="questionCounter">1/10</div>
+    </div>
+    <div class="quiz-body">
+        <div class="question-card">
+            <span class="question-number">سؤال <span id="currentQNum">1</span></span>
+            <h2 id="questionText">السؤال</h2>
+        </div>
+        <div class="options-container" id="optionsCont"></div>
+        <div id="infoBox" class="info-box"><strong>💡 فائدة:</strong><span id="expText"></span></div>
+        <button id="nextBtn" class="btn-next" onclick="nextStep()">التالي <i class="fas fa-arrow-left"></i></button>
+    </div>
+</div>
+
+<div class="result-overlay" id="resultOverlay">
+    <div class="win-card">
+        <i class="fas fa-trophy"></i>
+        <h1>🎉 مبارك!</h1>
+        <p style="color:var(--text-secondary);">أتممت المرحلة بنجاح</p>
+        <div class="points-earned">+<span id="earnedPoints">100</span> نقطة</div>
+        <button class="btn-next" style="display:block; margin:10px auto;" onclick="closeResult()">الخريطة</button>
+        <button class="btn-next" style="display:block; margin:5px auto; background:linear-gradient(135deg, #2ecc71, #27ae60); color:white;" onclick="nextStage()">التالي</button>
+    </div>
+</div>
+
+<div class="footer-brand"><strong>صفاء الروح</strong> • sabriFX</div>
+<div class="toast" id="toast"><span id="toastMsg"></span></div>
+
+<script>
+const STORAGE_KEY = 'sabriFX_state_v1';
+let gameState = { points: 0, lives: 30, unlockedStages: [0], completedStages: [], stageScores: {}, activeStage: -1, activeQuestion: -1 };
+const stagesData = [
+    { id:0, title:"المرحلة الأولى: فقه الطهارة", icon:"fa-faucet", type:"fiqh", questions: [
+        {q:"ما هو حكم السواك عند الوضوء؟",opts:["واجب","سنة مؤكدة","مكروه"],ans:1,exp:"السواك سنة مؤكدة عند الوضوء وفي كل وقت."},
+        {q:"كم عدد فروض الوضوء؟",opts:["أربعة","ستة","ثمانية"],ans:1,exp:"فروض الوضوء ستة: النية، وغسل الوجه، وغسل اليدين إلى المرفقين، ومسح الرأس، وغسل الرجلين إلى الكعبين، والترتيب."},
+        {q:"الماء الذي خالطته نجاسة فغيرت طعمه أو لونه أو رائحته هو:",opts:["طهور","طاهر","نجس"],ans:2,exp:"الماء إذا خالطته نجاسة وغيرت إحدى صفاته الثلاث يصبح نجساً لا يجوز التطهر به."},
+        {q:"ما هو الترتيب الصحيح في التيمم؟",opts:["مسح الوجه ثم الكفين","مسح الكفين ثم الوجه","غسل اليدين"],ans:0,exp:"التيمم: ضربة واحدة للوجه والكفين معاً، ثم مسح الوجه ثم الكفين."},
+        {q:"غسل أعضاء الوضوء أكثر من ثلاث مرات:",opts:["مستحب","مباح","مكروه"],ans:2,exp:"غسل الأعضاء أكثر من ثلاث مرات مكروه عند جمهور العلماء."},
+        {q:"ما الذي ينقض الوضوء من الخارجات؟",opts:["مسح الرأس","خروج ريح","المس دون شهوة"],ans:1,exp:"خروج الريح من الدبر ينقض الوضوء بإجماع العلماء."},
+        {q:"هل يشترط النية في الوضوء؟",opts:["لا يشترط","يشترط عند الجمهور","يشترط فقط في الغسل"],ans:1,exp:"النية ركن في الوضوء عند جمهور العلماء، ولا يصح الوضوء بدونها."},
+        {q:"ما حكم المسح على الخفين؟",opts:["حرام","جائز بشروط","واجب"],ans:1,exp:"المسح على الخفين جائز بشروط: أن يلبسا على طهارة، وأن يكونا ساترين لمحل الفرض، وأن يكونا من الجلد أو ما في حكمه."},
+        {q:"كم مدة المسح على الخفين للمقيم؟",opts:["ثلاثة أيام","يوم وليلة","أسبوع"],ans:1,exp:"مدة المسح للمقيم يوم وليلة، وللمسافر ثلاثة أيام بلياليهن."},
+        {q:"ما هو الماء الطهور؟",opts:["النقي فقط","الطاهر المطهر","مياه الأنهار"],ans:1,exp:"الماء الطهور هو الباقي على طهوريته، الطاهر في نفسه، المطهر لغيره."}
+    ]},
+    { id:1, title:"المرحلة الثانية: فقه الصلاة والصيام", icon:"fa-mosque", type:"fiqh", questions: [
+        {q:"أي مما يلي ليس من شروط صحة الصلاة؟",opts:["الركوع","استقبال القبلة","الطهارة"],ans:0,exp:"الركوع من أركان الصلاة وليس شرطاً، أما استقبال القبلة والطهارة فمن الشروط."},
+        {q:"أي صلاة لا ركوع فيها ولا سجود؟",opts:["صلاة الكسوف","صلاة الجنازة","صلاة الاستسقاء"],ans:1,exp:"صلاة الجنازة لا ركوع فيها ولا سجود، بل هي تكبيرات ودعاء."},
+        {q:"حكم قراءة الفاتحة للمأموم في الصلاة الجهرية:",opts:["واجبة","سنة","محل خلاف"],ans:2,exp:"اختلف العلماء في وجوب الفاتحة على المأموم، والراجح أنها تسقط بقراءة الإمام في الجهرية."},
+        {q:"سجود السهو للنقص في الصلاة يكون:",opts:["قبل السلام","بعد السلام","مخير"],ans:0,exp:"سجود السهو للنقص يكون قبل السلام عند جمهور العلماء."},
+        {q:"من نسي الركوع في الصلاة ماذا يفعل؟",opts:["يكمل الصلاة","يرجع فوراً إن لم يطل الفصل","تبطل صلاته"],ans:1,exp:"من نسي ركناً يرجع إليه فوراً إن لم يطل الفصل، وإلا تبطل الركعة."},
+        {q:"عدد ركعات صلاة الفجر فرضاً:",opts:["ثلاث","أربع","ركعتان"],ans:2,exp:"صلاة الفجر ركعتان فرضاً، وهي من الصلوات الخمس المفروضة."},
+        {q:"وقت صلاة العصر يبدأ من:",opts:["زوال الشمس","ظهور ظل مثل الشيء","بعد المغرب"],ans:1,exp:"وقت العصر يبدأ من ظهور ظل مثل الشيء بعد ظل الزوال."},
+        {q:"حكم تارك الصلاة عمداً:",opts:["معصية فقط","كفر أكبر عند الجمهور","مكروه"],ans:1,exp:"ترك الصلاة عمداً كفر أكبر يخرج من الملة عند جمهور العلماء."},
+        {q:"وقت الإمساك في رمضان يبدأ من:",opts:["أذان الفجر الأول","الفجر الصادق","شروق الشمس"],ans:1,exp:"الإمساك يبدأ من طلوع الفجر الصادق، وهو البياض المستطير في الأفق."},
+        {q:"من أكل أو شرب ناسياً في رمضان:",opts:["عليه القضاء","صيامه صحيح وليس عليه شيء","عليه الكفارة"],ans:1,exp:"من أكل أو شرب ناسياً فصيامه صحيح، وليس عليه قضاء ولا كفارة."},
+        {q:"قراءة الفاتحة تجب في:",opts:["الركعة الأولى فقط","الركعتين الأوليين","جميع ركعات الصلاة"],ans:2,exp:"الفاتحة ركن في كل ركعة من ركعات الصلاة عند جمهور العلماء."},
+        {q:"حكم صلاة الجماعة للرجال:",opts:["سنة مؤكدة","واجبة عند الجمهور","مستحبة"],ans:1,exp:"صلاة الجماعة واجبة على الرجال عند جمهور العلماء، وهي من شعائر الإسلام."},
+        {q:"أقل ما يجزئ في المسح على الخفين:",opts:["مسح ظاهرهما","مسح باطنهما","مسح جميعهما"],ans:0,exp:"يكفي في المسح على الخفين مسح ظاهرهما، ولا يشترط استيعابهما."},
+        {q:"تبطل الصلاة بـ:",opts:["الكلام العمد","الحركة القليلة","التثاؤب"],ans:0,exp:"الكلام العمد في الصلاة يبطلها، أما الحركة القليلة والتثاؤب فلا يبطلانها."},
+        {q:"حكم صلاة المسافر:",opts:["يجب عليه القصر","يجوز له القصر","لا يجوز القصر"],ans:1,exp:"يجوز للمسافر قصر الرباعية إلى ركعتين، وهو رخصة من الله."},
+        {q:"النية في صيام رمضان:",opts:["تكفي نية واحدة للشهر","تجب لكل يوم","تستحب فقط"],ans:1,exp:"تجب النية لكل يوم من أيام رمضان عند جمهور العلماء، وتكون من الليل."},
+        {q:"من أفطر في رمضان لعذر شرعي:",opts:["عليه الكفارة فقط","عليه القضاء فقط","لا شيء عليه"],ans:1,exp:"من أفطر لعذر كالمرض أو السفر، فعليه القضاء فقط دون كفارة."},
+        {q:"حكم صلاة التراويح:",opts:["واجبة","سنة مؤكدة","مكروهة"],ans:1,exp:"صلاة التراويح سنة مؤكدة، فعلها النبي ﷺ وأقرها الصحابة."},
+        {q:"عدد ركعات صلاة الوتر:",opts:["واحدة فقط","ثلاث فقط","واحدة أو ثلاث أو أكثر"],ans:2,exp:"الوتر يكون بركعة واحدة، أو ثلاث، أو خمس، أو أكثر، وأقله واحدة."},
+        {q:"وقت صلاة الوتر:",opts:["بعد العشاء فقط","من بعد العشاء إلى طلوع الفجر","قبل الفجر فقط"],ans:1,exp:"وقت الوتر من بعد صلاة العشاء إلى طلوع الفجر، وأفضله آخر الليل."}
+    ]},
+    { id:2, title:"المرحلة الثالثة: السيرة النبوية", icon:"fa-book-open", type:"islamic", questions: [
+        {q:"ولد النبي ﷺ في عام:",opts:["عام الفيل","عام الحزن","عام الهجرة"],ans:0,exp:"ولد النبي ﷺ في عام الفيل، وهو العام الذي حاول فيه أبرهة هدم الكعبة."},
+        {q:"اسم والدة النبي ﷺ:",opts:["آمنة بنت وهب","حليمة السعدية","فاطمة بنت أسد"],ans:0,exp:"والدة النبي ﷺ هي آمنة بنت وهب بن عبد مناف من بني زهرة."},
+        {q:"غار التعبد الذي كان يتحنث فيه النبي:",opts:["غار حراء","غار ثور","غار أحد"],ans:0,exp:"غار حراء في جبل النور هو المكان الذي كان يتعبد فيه النبي ﷺ قبل البعثة."},
+        {q:"أول من آمن من الرجال:",opts:["عمر بن الخطاب","أبو بكر الصديق","علي بن أبي طالب"],ans:1,exp:"أبو بكر الصديق رضي الله عنه أول من آمن من الرجال البالغين."},
+        {q:"أول من آمن من النساء:",opts:["عائشة رضي الله عنها","خديجة بنت خويلد","فاطمة الزهراء"],ans:1,exp:"خديجة بنت خويلد رضي الله عنها أول من آمن من النساء، وهي أول زوجات النبي ﷺ."},
+        {q:"أول من آمن من الصبيان:",opts:["عبد الله بن الزبير","علي بن أبي طالب","أسامة بن زيد"],ans:1,exp:"علي بن أبي طالب رضي الله عنه أول من آمن من الصبيان، وكان عمره عشر سنوات."},
+        {q:"مدة بقاء النبي ﷺ في مكة بعد البعثة:",opts:["10 سنوات","13 سنة","15 سنة"],ans:1,exp:"مكث النبي ﷺ في مكة بعد البعثة 13 سنة يدعو إلى الله سراً وجهراً."},
+        {q:"بيعة العقبة الأولى كانت مع:",opts:["أنصار المدينة","أهل الطائف","أهل اليمن"],ans:0,exp:"بيعة العقبة الأولى كانت مع ستة من الأنصار من الخزرج في منى."},
+        {q:"سنة الهجرة النبوية:",opts:["620م","622م","624م"],ans:1,exp:"كانت الهجرة النبوية في سنة 622م، وهي بداية التقويم الهجري."},
+        {q:"أول مسجد جُمِّع فيه في الإسلام:",opts:["مسجد قباء","المسجد النبوي","مسجد بني سالم"],ans:2,exp:"أول جمعة صلاها النبي ﷺ كانت في مسجد بني سالم بن عوف ببطن راناء."},
+        {q:"من آخى النبي ﷺ بينه وبين نفسه؟",opts:["أبو بكر الصديق","علي بن أبي طالب","عمر بن الخطاب"],ans:1,exp:"آخى النبي ﷺ بينه وبين علي بن أبي طالب رضي الله عنه في المدينة."},
+        {q:"أول غزوة غزاها النبي ﷺ:",opts:["غزوة بدر","غزوة أحد","غزوة الأبواء"],ans:2,exp:"أول غزوة غزاها النبي ﷺ هي غزوة الأبواء (ودان) في السنة الثانية للهجرة."},
+        {q:"في أي غزوة كسرت رباعية النبي ﷺ؟",opts:["غزوة بدر","غزوة أحد","غزوة الخندق"],ans:1,exp:"كسرت رباعية النبي ﷺ وشُجّ في وجهه في غزوة أحد."},        {q:"من التي سمت النبي ﷺ؟",opts:["هند بنت عتبة","زينب بنت الحارث اليهودية","أم جميل"],ans:1,exp:"زينب بنت الحارث اليهودية هي التي وضعت السم للنبي ﷺ في شاة مذبوحة في خيبر."},
+        {q:"سنة عمرة القضاء:",opts:["6هـ","7هـ","8هـ"],ans:1,exp:"كانت عمرة القضاء في السنة السابعة للهجرة، بعد صلح الحديبية."},
+        {q:"يوم الملحمة في السيرة هو:",opts:["فتح مكة","فتح خيبر","فتح القسطنطينية"],ans:1,exp:"يوم الملحمة هو يوم فتح خيبر، وكانت من أعظم غزوات النبي ﷺ."},
+        {q:"سنة حجة الوداع:",opts:["9هـ","10هـ","11هـ"],ans:1,exp:"حجة الوداع كانت في السنة العاشرة للهجرة، وهي آخر حج للنبي ﷺ."},
+        {q:"توفي النبي ﷺ في:",opts:["12 ربيع الأول","2 ربيع الأول","1 ربيع الأول"],ans:0,exp:"توفي النبي ﷺ يوم الاثنين 12 ربيع الأول سنة 11هـ."},
+        {q:"آخر من تزوج النبي ﷺ من أزواجه:",opts:["عائشة","أم سلمة","ميمونة"],ans:1,exp:"آخر من تزوج النبي ﷺ أم سلمة رضي الله عنها، وكانت آخر من ماتت من أمهات المؤمنين."},
+        {q:"اسم ناقة النبي ﷺ في الهجرة:",opts:["العضباء","القصواء","سبأ"],ans:1,exp:"القصواء هي الناقة التي ركبها النبي ﷺ في الهجرة من مكة إلى المدينة."},
+        {q:"من نام في فراش النبي ﷺ ليلة الهجرة؟",opts:["أبو بكر","علي بن أبي طالب","زيد بن حارثة"],ans:1,exp:"نام علي بن أبي طالب في فراش النبي ﷺ ليلة الهجرة ليخدع المشركين."},
+        {q:"غار الاختباء في الهجرة:",opts:["غار حراء","غار ثور","غار أحد"],ans:1,exp:"اختبأ النبي ﷺ وأبو بكر في غار ثور ثلاثة أيام أثناء الهجرة."},
+        {q:"دليل النبي ﷺ في الهجرة:",opts:["عبد الله بن أريقط","عبد الله بن فهيرة","أسماء بنت أبي بكر"],ans:0,exp:"عبد الله بن أريقط الليثي كان دليل النبي ﷺ في الهجرة، وكان مشركاً أميناً."},
+        {q:"البئر التي شرب منها النبي ﷺ في المدينة:",opts:["بئر ميمونة","بئر أبي عنبة","بئر رومة"],ans:1,exp:"بئر أبي عنبة هي التي شرب منها النبي ﷺ وتبرك بها في المدينة."},
+        {q:"أول دار نزل فيها النبي ﷺ بالمدينة:",opts:["قباء","دار أبي أيوب","السقيفة"],ans:1,exp:"نزل النبي ﷺ أول ما قدم المدينة في دار أبي أيوب الأنصاري رضي الله عنه."}
+    ]},
+    { id:3, title:"المرحلة الرابعة: الصحابة والسنة", icon:"fa-users", type:"islamic", questions: [
+        {q:"أول خليفة للمسلمين بعد النبي ﷺ:",opts:["عمر بن الخطاب","عثمان بن عفان","أبو بكر الصديق"],ans:2,exp:"أبو بكر الصديق رضي الله عنه أول خليفة للمسلمين، بويع في سقيفة بني ساعدة."},
+        {q:"من كان يسمى 'صاحب سر رسول الله'؟",opts:["علي بن أبي طالب","حذيفة بن اليمان","أبو بكر الصديق"],ans:1,exp:"حذيفة بن اليمان رضي الله عنه كان صاحب سر النبي ﷺ في أمر المنافقين."},
+        {q:"من جمع القرآن في المصحف؟",opts:["علي بن أبي طالب","زيد بن ثابت","أبي بن كعب"],ans:1,exp:"زيد بن ثابت رضي الله عنه هو الذي كلفه أبو بكر ثم عثمان بجمع القرآن في مصحف."},
+        {q:"من قال: 'لو كان الوحي ينزل عليَّ ما زدت على ما زاد أبو بكر'؟",opts:["أبو بكر","عمر بن الخطاب","عثمان بن عفان"],ans:1,exp:"قالها عمر بن الخطاب رضي الله عنه ثناءً على أبي بكر الصديق."},
+        {q:"من بشر بالجنة وهو يمشي على الأرض؟",opts:["أبو بكر","عمر","عثمان بن عفان"],ans:2,exp:"بشر النبي ﷺ عثمان بن عفان بالجنة وبشره بالبلاء بعد ذلك."},
+        {q:"من لُقب بـ 'أسد الله'؟",opts:["حمزة بن عبد المطلب","علي بن أبي طالب","خالد بن الوليد"],ans:1,exp:"علي بن أبي طالب رضي الله عنه لُقب بأسد الله، وكان من أشجع الصحابة."},
+        {q:"من لُقبت بـ 'أم المساكين'؟",opts:["عائشة","زينب بنت جحش","فاطمة"],ans:1,exp:"زينب بنت جحش رضي الله عنها كانت سخية، تُكنى بأم المساكين."},
+        {q:"من قال: 'أسألك حبك وحب من يحبك'؟",opts:["أبو بكر","عمر","بلال بن رباح"],ans:2,exp:"بلال بن رباح رضي الله عنه كان يدعو بهذا الدعاء من شدة حبه لله ولرسوله."},
+        {q:"من كان يُدعى 'الأمين' قبل البعثة؟",opts:["أبو بكر","عمر","محمد ﷺ"],ans:2,exp:"كان النبي ﷺ يُدعى 'الأمين' في قريش قبل البعثة لصدقه وأمانته."},
+        {q:"من لُقبت بـ 'الطاهرة'؟",opts:["خديجة","عائشة","فاطمة"],ans:0,exp:"خديجة بنت خويلد رضي الله عنها لُقبت بالطاهرة قبل الإسلام وبعده."},
+        {q:"من يكنى بـ 'أبي عبد الله'؟",opts:["أبو بكر","عمر","عثمان"],ans:0,exp:"أبو بكر الصديق يكنى بأبي عبد الله، وهو أشهر كناه."},
+        {q:"من قال: 'ألقيتكم في بحركم'؟",opts:["خالد بن الوليد","سعد بن أبي وقاص","عمرو بن العاص"],ans:0,exp:"قالها خالد بن الوليد رضي الله عنه لأهل الحيرة عند فتحها."},
+        {q:"من فتح مصر؟",opts:["عمرو بن العاص","خالد بن الوليد","عقبة بن نافع"],ans:0,exp:"فتح عمرو بن العاص رضي الله عنه مصر في عهد عمر بن الخطاب."},
+        {q:"حديث 'إنما الأعمال بالنيات' رواه:",opts:["النبي ﷺ","أبو بكر","عمر"],ans:0,exp:"هذا الحديث من أشهر أحاديث النبي ﷺ، وهو أول حديث في صحيح البخاري."},
+        {q:"من كان يسمى 'حبر الأمة'؟",opts:["ابن عباس","ابن مسعود","ابن عمر"],ans:0,exp:"عبد الله بن عباس رضي الله عنهما لُقب بحبر الأمة لترجمته للقرآن وعلمه."},
+        {q:"من كانت تُدعى 'الحميراء'؟",opts:["عائشة","حفصة","جويرية"],ans:0,exp:"عائشة رضي الله عنها كانت تُدعى الحميراء لصفاء بشرتها."},
+        {q:"من لُقب بـ 'ذو النورين'؟",opts:["أبو بكر","عمر","عثمان"],ans:2,exp:"عثمان بن عفان لُقب بذي النورين لأنه تزوج ابنتي النبي ﷺ: رقية ثم أم كلثوم."},
+        {q:"من لُقب بـ 'الفاروق'؟",opts:["أبو بكر","عمر","علي"],ans:1,exp:"عمر بن الخطاب رضي الله عنه لُقب بالفاروق لأنه فرق بين الحق والباطل."},
+        {q:"من هو 'سيد الشهداء'؟",opts:["حمزة بن عبد المطلب","جعفر بن أبي طالب","مصعب بن عمير"],ans:0,exp:"حمزة بن عبد المطلب رضي الله عنه سيد الشهداء، قُتل في غزوة أحد."},
+        {q:"من هو 'طيار الجنة'؟",opts:["جعفر بن أبي طالب","زيد بن حارثة","عبد الله بن جحش"],ans:0,exp:"جعفر بن أبي طالب رضي الله عنه لُقب بطيار الجنة لاستشهاده في مؤتة."}
+    ]},
+    { id:4, title:"المرحلة الخامسة: الثقافة الإسلامية", icon:"fa-graduation-cap", type:"islamic", questions: [
+        {q:"عدد سور القرآن الكريم:",opts:["112","114","116"],ans:1,exp:"عدد سور القرآن 114 سورة، أولها الفاتحة وآخرها الناس."},
+        {q:"أطول سورة في القرآن:",opts:["آل عمران","البقرة","النساء"],ans:1,exp:"سورة البقرة أطول سورة في القرآن، وعدد آياتها 286 آية."},
+        {q:"أقصر سورة في القرآن:",opts:["الإخلاص","الكوثر","العصر"],ans:1,exp:"سورة الكوثر أقصر سورة، وعدد آياتها 3 آيات فقط."},
+        {q:"عدد أجزاء القرآن:",opts:["28","30","32"],ans:1,exp:"القرآن مقسم إلى 30 جزءاً لتسهيل التلاوة والحفظ."},
+        {q:"سورة تُسمى 'قلب القرآن':",opts:["يس","الرحمن","الملك"],ans:0,exp:"سورة يس تسمى قلب القرآن، لقول النبي ﷺ: 'إن لكل شيء قلباً، وقلب القرآن يس'."},
+        {q:"سورة تعدل ثلث القرآن:",opts:["الإخلاص","الفاتحة","الكوثر"],ans:0,exp:"سورة الإخلاص تعدل ثلث القرآن، كما صح عن النبي ﷺ."},
+        {q:"أول سورة نزلت من القرآن:",opts:["الفاتحة","العلق","المزمل"],ans:1,exp:"أول ما نزل من القرآن: {اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ} من سورة العلق."},
+        {q:"آخر سورة نزلت من القرآن:",opts:["النصر","المائدة","التوبة"],ans:1,exp:"آخر آية نزلت: {وَاتَّقُوا يَوْمًا تُرْجَعُونَ فِيهِ إِلَى اللَّهِ} من سورة المائدة."},
+        {q:"عدد آيات القرآن:",opts:["6236","6348","6666"],ans:2,exp:"عدد آيات القرآن 6666 آية على القول المشهور، مع اختلاف بسيط في العد."},
+        {q:"السورة التي لا تبدأ بالبسملة:",opts:["التوبة","الأنفال","براءة"],ans:0,exp:"سورة التوبة هي السورة الوحيدة التي لا تبدأ بالبسملة."},
+        {q:"السورة التي ذكرت فيها البسملة مرتين:",opts:["النمل","الفاتحة","البقرة"],ans:0,exp:"سورة النمل فيها بسملة في البداية، وأخرى في قصة سليمان مع بلقيس."},
+        {q:"سورة تُسمى 'العرائس':",opts:["الرحمن","يس","الواقعة"],ans:0,exp:"سورة الرحمن تسمى سورة العرائس لحسنها وجمال معانيها."},
+        {q:"سورة تُسمى 'المبثوثة':",opts:["الحشر","الصف","الجمعة"],ans:0,exp:"سورة الحشر تسمى المبثوثة لكثرة ما بُثَّ فيها من المواعظ."},
+        {q:"عدد أسماء الله الحسنى:",opts:["97","99","101"],ans:1,exp:"أسماء الله الحسنى تسعة وتسعون اسماً، من أحصاها دخل الجنة."},        {q:"اسم الله الأعظم:",opts:["الله","الرحمن","اختلف العلماء في تعيينه"],ans:2,exp:"اختلف العلماء في تعيين اسم الله الأعظم، والراجح أنه لا يُحصر في اسم واحد."},
+        {q:"عدد أركان الإيمان:",opts:["5","6","7"],ans:1,exp:"أركان الإيمان ستة: الإيمان بالله، وملائكته، وكتبه، ورسله، واليوم الآخر، والقدر."},
+        {q:"عدد أركان الإسلام:",opts:["4","5","6"],ans:1,exp:"أركان الإسلام خمسة: الشهادتان، وإقام الصلاة، وإيتاء الزكاة، وصوم رمضان، وحج البيت."},
+        {q:"أفضل الأعمال عند الله:",opts:["الصلاة","الإيمان بالله ورسوله","الجهاد"],ans:1,exp:"أفضل الأعمال الإيمان بالله ورسوله، ثم الجهاد في سبيله، كما صح في الحديث."},
+        {q:"أفضل الصدقات:",opts:["الصدقة في السر","صدقة رمضان","الصدقة على ذي الرحم"],ans:2,exp:"الصدقة على ذي الرحم أفضل، لأنها صدقة وصلة."},
+        {q:"أفضل الأيام عند الله:",opts:["يوم الجمعة","يوم عرفة","يوم النحر"],ans:2,exp:"يوم النحر (يوم العيد) أفضل الأيام عند الله، كما صح في الحديث."},
+        {q:"أفضل الليالي:",opts:["ليلة القدر","ليلة شعبان","ليلة الجمعة"],ans:0,exp:"ليلة القدر خير من ألف شهر، وهي أفضل الليالي."},
+        {q:"أفضل الشهور:",opts:["رمضان","المحرم","ذو الحجة"],ans:0,exp:"شهر رمضان أفضل الشهور، فيه نزل القرآن، وفيه تُفتح أبواب الجنة."},
+        {q:"أفضل البقاع:",opts:["المسجد الحرام","المسجد النبوي","المسجد الأقصى"],ans:0,exp:"المسجد الحرام أفضل البقاع، والصلاة فيه بمئة ألف صلاة."},
+        {q:"أفضل الصلاة بعد الفريضة:",opts:["صلاة الليل","صلاة الضحى","صلاة التراويح"],ans:0,exp:"أفضل الصلاة بعد الفريضة صلاة الليل، كما صح عن النبي ﷺ."},
+        {q:"أفضل الصيام بعد رمضان:",opts:["صيام الاثنين والخميس","صيام شوال","صيام عرفة"],ans:0,exp:"أفضل الصيام بعد رمضان صيام المحرم، ثم صيام الاثنين والخميس."},
+        {q:"أفضل الذكر:",opts:["لا إله إلا الله","سبحان الله","الله أكبر"],ans:0,exp:"أفضل الذكر: لا إله إلا الله، كما صح: 'أفضل ما قلت أنا والنبيون من قبلي: لا إله إلا الله'."},
+        {q:"أفضل الدعوة:",opts:["دعوة الوالد لولده","دعوة الصائم","دعوة المظلوم"],ans:2,exp:"دعوة المظلوم مستجابة، وليس بينها وبين الله حجاب."},
+        {q:"أفضل الجهاد:",opts:["جهاد النفس","جهاد المال","كلمة حق عند سلطان جائر"],ans:2,exp:"أفضل الجهاد كلمة حق تُقال لسلطان جائر، كما صح في الحديث."},
+        {q:"أفضل الهجرة:",opts:["هجرة البدن","هجرة السوء","هجرة الأهل"],ans:1,exp:"أفضل الهجرة هجرة السوء، أي هجر ما نهى الله عنه."},
+        {q:"أفضل الجهاد في سبيل الله:",opts:["القتال","الدعوة","الإنفاق"],ans:0,exp:"أفضل الجهاد في سبيل الله هو الجهاد بالقتال، مع الإخلاص والنية."}
+    ]}
+];
+
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        loadGame();
+        document.getElementById('loadingScreen').classList.add('hidden');
+    }, 500);
+});
+
+function goBack() { if(confirm("العودة؟")) window.history.back(); }
+
+function saveGame() { 
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(gameState)); showSaveIndicator(); } catch(e) {} 
+}
+
+function showSaveIndicator() { 
+    const ind = document.getElementById('saveIndicator'); 
+    ind.classList.add('show'); 
+    setTimeout(()=>ind.classList.remove('show'),1500); 
+}
+
+function loadGame() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) { 
+            const p = JSON.parse(saved); 
+            gameState = { ...gameState, ...p }; 
+            if (gameState.activeStage !== -1 && !gameState.completedStages.includes(gameState.activeStage)) { 
+                document.getElementById('resumeModal').style.display = 'flex'; 
+                return;
+            }
+        }
+        initGameUI();    } catch(e) { initGameUI(); }
+}
+
+function resumeGame() { 
+    document.getElementById('resumeModal').style.display = 'none'; 
+    if(gameState.activeStage >= 0) startStage(gameState.activeStage, true); 
+}
+
+function cancelResume() { 
+    gameState.activeStage = -1; 
+    gameState.activeQuestion = -1; 
+    saveGame(); 
+    document.getElementById('resumeModal').style.display = 'none'; 
+    initGameUI(); 
+}
+
+function initGameUI() { updateStats(); renderMap(); }
+
+function updateStats() { 
+    document.getElementById('pointsCont').innerText = gameState.points; 
+    document.getElementById('livesCont').innerText = gameState.lives; 
+    updateRank(); 
+}
+
+function updateRank() {
+    const ranks = [{name:"مبتدئ",min:0,icon:"🌱"},{name:"طالب علم",min:100,icon:"📖"},{name:"حافظ",min:300,icon:"🧠"},{name:"فقيه",min:600,icon:"⚖️"},{name:"عالم",min:1000,icon:"🕌"},{name:"شيخ الإسلام",min:1600,icon:"👳"},{name:"إمام الأمة",min:2500,icon:"👑"}];
+    let cur = ranks[0], nxt = ranks[1]; 
+    for(let i=0; i<ranks.length; i++) if(gameState.points >= ranks[i].min) { cur = ranks[i]; nxt = ranks[i+1] || ranks[i]; }
+    document.getElementById('rankName').innerText = cur.name; 
+    document.getElementById('rankDisplay').innerHTML = cur.icon + ' ' + cur.name;
+    const prg = nxt.min === cur.min ? 100 : Math.min(100, ((gameState.points - cur.min) / (nxt.min - cur.min)) * 100); 
+    document.getElementById('rankProgress').style.width = prg + '%';
+}
+
+function renderMap() {
+    const map = document.getElementById('gameMap'); 
+    map.innerHTML = '';
+    stagesData.forEach((stage, index) => {
+        const isLocked = !gameState.unlockedStages.includes(index);
+        const isCompleted = gameState.completedStages.includes(index);
+        const score = gameState.stageScores[index] || { correct: 0, total: stage.questions.length };
+        const accuracy = score.total ? Math.round((score.correct / score.total) * 100) : 0;
+        const node = document.createElement('div');
+        node.className = 'level-node ' + (isLocked ? 'locked' : '') + ' ' + (isCompleted ? 'completed' : '');
+        if(!isLocked) node.onclick = () => startStage(index, false);
+        
+        let iconHtml = isLocked ? '<i class="fas fa-lock lock-icon"></i>' : isCompleted ? '<i class="fas fa-check-circle completed-icon"></i>' : '<i class="fas fa-play lock-icon"></i>';
+        let metaHtml = isCompleted ? '<span><i class="fas fa-check"></i> مكتملة</span>' : '';
+        if(score.correct > 0) metaHtml += '<span><i class="fas fa-star"></i> ' + accuracy + '% دقة</span>';
+                node.innerHTML = '<div class="node-icon"><i class="fas ' + stage.icon + '"></i></div>' +
+                        '<div class="node-info"><h3>' + stage.title + '</h3><span>' + stage.questions.length + ' أسئلة • ' + (stage.type==='fiqh'?'فقه':'ثقافة إسلامية') + '</span>' +
+                        '<div class="node-meta">' + metaHtml + '</div></div>' + iconHtml;
+        map.appendChild(node);
+    });
+}
+
+function startStage(index, isResume) {
+    if(!isResume && gameState.lives <= 0) { showToast("❤️ انتهت المحاولات!", "error"); return; }
+    gameState.activeStage = index;
+    gameState.activeQuestion = isResume && gameState.activeQuestion >= 0 ? gameState.activeQuestion : 0;
+    document.getElementById('quizOverlay').style.display = 'flex';
+    document.getElementById('stageTitle').innerText = stagesData[index].title;
+    updateQuestionCounter(); 
+    showQuestion(); 
+    saveGame();
+}
+
+function updateQuestionCounter() { 
+    const s = stagesData[gameState.activeStage]; 
+    document.getElementById('questionCounter').innerText = (gameState.activeQuestion + 1) + '/' + s.questions.length; 
+    document.getElementById('currentQNum').innerText = gameState.activeQuestion + 1; 
+}
+
+function showQuestion() {
+    const stage = stagesData[gameState.activeStage];
+    if (gameState.activeQuestion >= stage.questions.length) { winStage(); return; }
+    const q = stage.questions[gameState.activeQuestion];
+    document.getElementById('questionText').innerText = q.q;
+    document.getElementById('expText').innerText = q.exp;
+    const cont = document.getElementById('optionsCont'); 
+    cont.innerHTML = '';
+    document.getElementById('infoBox').style.display = 'none'; 
+    document.getElementById('nextBtn').style.display = 'none';
+    
+    q.opts.forEach((opt, idx) => {
+        const div = document.createElement('div'); 
+        div.className = 'option-item';
+        div.innerHTML = (idx + 1) + '. ' + opt;
+        div.onclick = () => checkAns(idx, q.ans, div); 
+        cont.appendChild(div);
+    });
+}
+
+function checkAns(selected, correct, el) {
+    const items = document.querySelectorAll('.option-item'); 
+    items.forEach(item => item.style.pointerEvents = 'none');
+    
+    if(selected === correct) { 
+        el.classList.add('correct');         gameState.points += 25; 
+        showToast('✅ صحيحة!', 'success'); 
+    } else { 
+        el.classList.add('wrong'); 
+        gameState.lives--; 
+        showToast('❌ خاطئة', 'error'); 
+        if(items[correct]) items[correct].classList.add('correct'); 
+    }
+    
+    if(!gameState.stageScores[gameState.activeStage]) gameState.stageScores[gameState.activeStage] = { correct: 0, total: 0 };
+    gameState.stageScores[gameState.activeStage].total++; 
+    if(selected === correct) gameState.stageScores[gameState.activeStage].correct++;
+    
+    updateStats(); 
+    saveGame();
+    
+    if(gameState.lives <= 0 && selected !== correct) { 
+        setTimeout(()=>{ showToast("❤️ انتهت القلوب!", "error"); closeQuiz(); }, 1000); 
+        return; 
+    }
+    
+    setTimeout(()=>{ 
+        document.getElementById('infoBox').style.display = 'block'; 
+        document.getElementById('nextBtn').style.display = 'block'; 
+    }, 500);
+}
+
+function nextStep() { 
+    gameState.activeQuestion++; 
+    saveGame(); 
+    const s = stagesData[gameState.activeStage]; 
+    if(gameState.activeQuestion < s.questions.length) { 
+        updateQuestionCounter(); 
+        showQuestion(); 
+    } else { 
+        winStage(); 
+    } 
+}
+
+function winStage() {
+    const idx = gameState.activeStage; 
+    gameState.activeStage = -1; 
+    gameState.activeQuestion = -1;
+    
+    if(idx !== -1 && !gameState.completedStages.includes(idx)) { 
+        gameState.completedStages.push(idx); 
+        const nxt = idx + 1; 
+        if(nxt < stagesData.length && !gameState.unlockedStages.includes(nxt)) { 
+            gameState.unlockedStages.push(nxt); 
+        }     }
+    
+    const bonus = 100 + (idx * 25); 
+    gameState.points += bonus; 
+    document.getElementById('earnedPoints').innerText = bonus;
+    updateStats(); 
+    saveGame(); 
+    document.getElementById('quizOverlay').style.display = 'none'; 
+    document.getElementById('resultOverlay').style.display = 'flex';
+}
+
+function closeResult() { document.getElementById('resultOverlay').style.display = 'none'; renderMap(); }
+
+function nextStage() { 
+    closeResult(); 
+    for(let i=0; i<stagesData.length; i++) { 
+        if(!gameState.completedStages.includes(i)) { 
+            startStage(i, false); 
+            return; 
+        } 
+    } 
+    showToast('🎉 أنهيت الكل!', 'success'); 
+}
+
+function closeQuiz() { document.getElementById('quizOverlay').style.display = 'none'; renderMap(); }
+
+function showToast(msg, type='info') { 
+    const t = document.getElementById('toast');
+    const m = document.getElementById('toastMsg');
+    m.innerText = msg; 
+    t.className = 'toast ' + type + ' show'; 
+    setTimeout(()=>t.classList.remove('show'), 2500); 
+}
+
+setInterval(saveGame, 10000);
+window.addEventListener('beforeunload', saveGame);
+</script>
+</body>
+</html>
+    
 </div>
 
 <!-- 🕌 صفحة الصلاة -->
