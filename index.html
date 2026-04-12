@@ -2969,13 +2969,200 @@ window.addEventListener('beforeunload', saveGame);
 <!-- 📿 صفحة المسبحة -->
 <div id="msbaha" class="page">
     <div class="back" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i><span>العودة للرئيسية</span></div>
-    <!-- ⬇️⬇️⬇️ ضع كود صفحة المسبحة هنا ⬇️⬇️⬇️ -->
-    
-    <!-- =============================== -->
-    <!-- [ ضع كود صفحة المسبحة هنا ] -->
-    <!-- =============================== -->
-    
-    <!-- ⬆️️⬆️ نهاية كود صفحة المسبحة ⬆️️⬆️ -->
+    <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2d2d2d">
+    <title>مسبحة صفاء الروح | sabriFX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-dark: #1a1a1a;
+            --primary-light: #2d2d2d;
+            --accent-gold: #f4d03f;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; color: var(--text-primary);
+        }
+
+        .header-bg {
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.98), rgba(26, 26, 26, 0.95));
+            height: 120px; width: 100%;
+            border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            border-bottom: 2px solid var(--accent-gold);
+        }
+
+        .tasbeeh-card {
+            margin-top: 30px; width: 92%; max-width: 380px;
+            background: var(--primary-light); padding: 25px;
+            border-radius: 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            text-align: center; border: 1px solid rgba(244, 208, 63, 0.2);
+        }
+
+        .zikr-selector {
+            width: 100%; padding: 12px; background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(244, 208, 63, 0.3); border-radius: 15px;
+            color: white; font-family: 'Tajawal'; font-weight: 800; margin-bottom: 20px;
+        }
+
+        .counter-display { font-size: 4.5rem; font-weight: 900; color: var(--accent-gold); margin: 10px 0; }
+
+        .tap-zone {
+            width: 140px; height: 140px; 
+            background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+            border-radius: 50%; margin: 20px auto;
+            display: flex; justify-content: center; align-items: center;
+            border: 3px solid var(--accent-gold); transition: transform 0.1s;
+            cursor: pointer; position: relative;
+        }
+        .tap-zone:active { transform: scale(0.92); }
+        .tap-zone i { font-size: 2.5rem; color: var(--accent-gold); }
+
+        .btn-reset {
+            background: rgba(244, 208, 63, 0.1); border: 2px solid var(--accent-gold);
+            color: var(--accent-gold); padding: 10px 25px; border-radius: 20px;
+            font-weight: 800; cursor: pointer; margin-top: 15px;
+        }
+
+        /* نافذة التأكيد المخصصة */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); display: none;
+            justify-content: center; align-items: center; z-index: 9999;
+        }
+        .modal-content {
+            background: var(--primary-light); padding: 30px; border-radius: 20px;
+            width: 85%; max-width: 320px; text-align: center; border: 2px solid var(--accent-gold);
+        }
+        .modal-btns { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+        .btn-confirm { background: var(--accent-gold); color: black; border: none; padding: 10px 20px; border-radius: 10px; font-weight: bold; }
+        .btn-cancel { background: transparent; color: white; border: 1px solid #777; padding: 10px 20px; border-radius: 10px; }
+
+        .notification {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: #333; color: white; padding: 12px 25px; border-radius: 50px;
+            border: 1px solid var(--accent-gold); transition: 0.4s; z-index: 10000;
+        }
+        .notification.show { transform: translateX(-50%) translateY(0); }
+        
+        footer { margin-top: auto; padding: 20px; font-size: 0.8rem; color: var(--text-secondary); }
+        footer span { color: var(--accent-gold); font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="header-bg">
+    <div style="color: var(--accent-gold); font-weight: 900; font-size: 1.5rem;">✨ مسبحة صفاء الروح ✨</div>
+</div>
+
+<div class="tasbeeh-card">
+    <select class="zikr-selector" id="zikrList">
+        <option value="1">استغفر الله</option>
+        <option value="2">سبحان الله</option>
+        <option value="3">الحمد لله</option>
+        <option value="4">لا إله إلا الله</option>
+        <option value="5">الله أكبر</option>
+        <option value="6">لا حول ولا قوة إلا بالله</option>
+        <option value="7">الصلاة على النبي ﷺ</option>
+    </select>
+
+    <div id="currentZikr" style="font-weight: bold; color: var(--text-secondary);">استغفر الله</div>
+    <div class="counter-display" id="counter">0</div>
+
+    <div class="tap-zone" id="tapZone">
+        <i class="fas fa-fingerprint"></i>
+    </div>
+
+    <button class="btn-reset" id="resetBtn">تصفير العداد</button>
+</div>
+
+<div class="modal-overlay" id="modal">
+    <div class="modal-content">
+        <h3 style="color: var(--accent-gold); margin-top: 0;">تأكيد التصفير</h3>
+        <p>هل تريد تصفير عداد هذا الذكر؟</p>
+        <div class="modal-btns">
+            <button class="btn-confirm" id="confirmReset">نعم</button>
+            <button class="btn-cancel" id="closeModal">إلغاء</button>
+        </div>
+    </div>
+</div>
+
+<div class="notification" id="notification"></div>
+
+<footer>تطبيق <span>صفاء الروح</span> | sabriFX</footer>
+
+<script>
+    const STORAGE_KEY = 'sabriFX_tasbeeh_v2';
+    const selector = document.getElementById('zikrList');
+    const counterDisplay = document.getElementById('counter');
+    const tapZone = document.getElementById('tapZone');
+    const modal = document.getElementById('modal');
+    const notification = document.getElementById('notification');
+
+    let counters = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+
+    function updateView() {
+        const id = selector.value;
+        counterDisplay.textContent = counters[id] || 0;
+        document.getElementById('currentZikr').textContent = selector.options[selector.selectedIndex].text;
+    }
+
+    function showNotify(msg) {
+        notification.textContent = msg;
+        notification.classList.add('show');
+        setTimeout(() => notification.classList.remove('show'), 2000);
+    }
+
+    tapZone.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        const id = selector.value;
+        counters[id] = (counters[id] || 0) + 1;
+        counterDisplay.textContent = counters[id];
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(counters));
+        if(navigator.vibrate) navigator.vibrate(20);
+    });
+
+    document.getElementById('resetBtn').onclick = () => {
+        const id = selector.value;
+        if(!counters[id] || counters[id] === 0) return showNotify('العداد صفر بالفعل');
+        modal.style.display = 'flex';
+    };
+
+    document.getElementById('confirmReset').onclick = () => {
+        const id = selector.value;
+        counters[id] = 0;
+        counterDisplay.textContent = '0';
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(counters));
+        modal.style.display = 'none';
+        showNotify('تم التصفير بنجاح');
+    };
+
+    document.getElementById('closeModal').onclick = () => modal.style.display = 'none';
+    selector.onchange = updateView;
+
+    updateView();
+</script>
+</body>
+</html>
 </div>
 
 <!-- 🌙 صفحة الأحلام -->
