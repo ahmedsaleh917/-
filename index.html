@@ -1433,13 +1433,666 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- 🛡️ صفحة الرقية -->
 <div id="ruqia" class="page">
     <div class="back" onclick="goHome()"><i class="fa-solid fa-arrow-right"></i><span>العودة للرئيسية</span></div>
-    <!-- ⬇️⬇️⬇️ ضع كود صفحة الرقية هنا ⬇️⬇️⬇️ -->
+    <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#2d2d2d">
+<title>صفاء الروح - الرقية الشرعية الكاملة</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="https://i.postimg.cc/zGSvxgCn/1775323811617.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@700;800&family=Amiri:wght@400;700&family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root{
+--primary-bg:#2d2d2d;
+--dark-bg:#252525;
+--light-bg:#353535;
+--primary-gold:#d4af37;
+--gold-light:#f4e5c2;
+--text-light:#ffffff;
+--glass:rgba(45,45,45,0.65);
+--glass-border:rgba(212,175,55,0.15);
+--card-shadow:0 8px 32px rgba(0,0,0,0.35);
+--border-radius:14px;
+--font-base:13px
+}
+
+*{margin:0;padding:0;box-sizing:border-box;transition:all 0.25s ease;text-align:center}
+
+body{
+font-family:'Tajawal',sans-serif;
+background:#2d2d2d;
+color:var(--text-light);
+min-height:100vh;
+line-height:1.7;
+font-size:var(--font-base);
+padding-bottom:70px
+}
+
+/* ================= الهيدر ================= */
+.header-new{
+background:#2d2d2d;
+padding:60px 16px 24px;
+position:relative;
+margin-bottom:16px;
+border-bottom:1px solid var(--glass-border)
+}
+.header-new::before,.header-new::after{
+content:'✨';
+position:absolute;
+top:12px;
+font-size:22px;
+opacity:0.35
+}
+.header-new::before{left:20px}
+.header-new::after{right:20px}
+
+.app-title{
+font-family:'Almarai',sans-serif;
+font-size:26px;
+font-weight:800;
+color:var(--primary-gold);
+margin-bottom:6px;
+text-shadow:0 2px 12px rgba(212,175,55,0.25)
+}
+
+.app-subtitle{
+font-size:12px;
+color:rgba(255,255,255,0.7);
+margin-bottom:10px
+}
+
+.plus-badge{
+display:inline-flex;
+align-items:center;
+gap:5px;
+background:rgba(212,175,55,0.08);
+border:1px solid rgba(212,175,55,0.3);
+padding:5px 14px;
+border-radius:18px;
+font-size:11px;
+font-weight:700;
+color:var(--primary-gold)
+}
+
+/* ================= زر الرجوع ================= */
+.top-controls{
+position:absolute;
+top:16px;
+left:16px;
+right:16px;
+display:flex;
+justify-content:flex-end;
+z-index:100
+}
+
+.back-btn{background:var(--light-bg);
+border:1px solid var(--glass-border);
+color:var(--primary-gold);
+width:32px;
+height:32px;
+border-radius:9px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:12px;
+cursor:pointer
+}
+
+.back-btn:active{transform:scale(0.95)}
+
+/* ================= المحتوى ================= */
+.content-container{
+max-width:720px;
+margin:0 auto;
+padding:0 14px
+}
+
+.content-panel{display:none;animation:fadeIn 0.4s ease}
+.content-panel.active{display:block}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(12px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+/* ================= البطاقات والآيات ================= */
+.verse-card{
+background:var(--glass);
+backdrop-filter:blur(12px);
+border-radius:var(--border-radius);
+padding:14px 12px;
+margin-bottom:12px;
+box-shadow:var(--card-shadow);
+border:1px solid var(--glass-border)
+}
+
+.verse-header{
+font-family:'Almarai',sans-serif;
+font-size:13px;
+font-weight:800;
+color:var(--primary-gold);
+margin-bottom:10px;
+padding-bottom:8px;
+border-bottom:1px solid rgba(255,255,255,0.04);
+display:flex;align-items:center;
+justify-content:center;
+gap:6px
+}
+
+.verse-text{
+font-family:'Amiri',serif;
+line-height:2.1;
+font-size:16px;
+font-weight:700;
+color:var(--text-light);
+white-space:pre-line
+}
+
+.verse-tahreej{
+font-family:'Tajawal',sans-serif;
+font-weight:600;
+font-size:13px;
+line-height:1.9;
+color:var(--gold-light)
+}
+
+.recommendation-box{
+background:rgba(212,175,55,0.06);
+border:1px dashed rgba(212,175,55,0.3);
+padding:10px;
+border-radius:10px;
+font-size:11px;
+color:var(--gold-light);
+margin:12px 0;
+font-weight:600
+}
+
+.important-notice{
+text-align:center;
+padding:10px 14px;
+font-size:11px;
+color:var(--primary-gold);
+background:rgba(255,255,255,0.02);
+border-radius:10px;
+margin:12px auto;
+border:1px solid var(--glass-border);
+font-weight:600;
+max-width:580px
+}
+
+/* ================= الفوتر ================= */
+.footer-section{
+padding:22px 14px;
+margin-top:28px;border-top:1px solid var(--glass-border);
+background:#2d2d2d
+}
+
+.footer-dua{
+font-family:'Amiri',serif;
+color:var(--primary-gold);
+font-size:14px;
+line-height:1.9;
+font-weight:700;
+margin-bottom:14px
+}
+
+.footer-divider{
+width:50px;
+height:2px;
+background:linear-gradient(90deg,transparent,var(--primary-gold),transparent);
+margin:16px auto
+}
+
+.footer-text{
+font-family:'Almarai',sans-serif;
+color:rgba(255,255,255,0.6);
+font-size:11px;
+margin-bottom:8px
+}
+
+.app-copyright{
+font-family:'Almarai',sans-serif;
+font-size:10px;
+color:rgba(255,255,255,0.4)
+}
+
+/* ================= شريط التنقل السفلي ================= */
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:#252525;
+backdrop-filter:blur(18px);
+border-top:1px solid var(--glass-border);
+padding:8px 6px;
+display:flex;
+justify-content:space-around;
+z-index:1000
+}
+
+.nav-item{
+display:flex;flex-direction:column;
+align-items:center;
+gap:4px;
+padding:6px 4px;
+border-radius:10px;
+cursor:pointer;
+color:rgba(255,255,255,0.5);
+font-size:10px;
+flex:1;
+max-width:70px
+}
+
+.nav-item.active{
+color:var(--primary-gold);
+background:rgba(212,175,55,0.08)
+}
+
+.nav-item i{font-size:17px}
+
+/* ================= Offline ================= */
+#offline-page{
+display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+background:#2d2d2d;z-index:9999;justify-content:center;align-items:center
+}
+#offline-page.show{display:flex}
+.offline-container{
+background:var(--light-bg);border-radius:20px;padding:24px 20px;
+border:1px solid var(--primary-gold);box-shadow:var(--card-shadow);max-width:300px
+}
+.offline-container h2{color:var(--primary-gold);font-size:15px;margin-bottom:8px}
+.offline-container p{color:var(--text-light);font-size:11px;line-height:1.5;margin-bottom:14px;opacity:0.9}
+.retry-btn{
+background:var(--primary-gold);color:#1a1a1a;border:none;
+padding:8px 18px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer
+}
+
+#connection-status{
+display:none;position:fixed;bottom:68px;left:50%;transform:translateX(-50%);
+background:var(--primary-gold);color:#1a1a1a;padding:6px 16px;
+border-radius:18px;font-weight:700;font-size:10px;z-index:2000
+}
+#connection-status.show{display:flex}
+
+/* ================= Responsive ================= */
+@media(max-width:480px){
+.app-title{font-size:22px}
+.verse-text{font-size:15px;line-height:2}
+.verse-card{padding:12px 10px}
+.header-new{padding:55px 14px 20px}
+}</style>
+</head>
+<body>
+
+<!-- 🚫 Offline -->
+<div id="offline-page">
+    <div class="offline-container">
+        <i class="fas fa-wifi-slash" style="font-size:36px;color:var(--primary-gold);margin-bottom:12px"></i>
+        <h2>لا يوجد اتصال</h2>
+        <p>قسم الرقية يعمل دون إنترنت. اقرأ الآيات والأدعية في أي وقت.</p>
+        <button class="retry-btn" onclick="checkConnection()">🔄 حاول مجدداً</button>
+    </div>
+</div>
+
+<!-- 🕌 Header -->
+<div class="header-new">
+    <div class="top-controls">
+        <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-right"></i></button>
+    </div>
+    <h1 class="app-title">صفاء الروح</h1>
+    <p class="app-subtitle">طمأنينة تقربك من الله في كل لحظة</p>
+    <div class="plus-badge"><i class="fas fa-star"></i><span>إصدار Plus</span></div>
+</div>
+
+<div class="content-container">
+  <div class="important-notice">🔹 جميع الآيات مكتوبة كاملة كما في المصحف الشريف ✨</div>
+
+  <!-- 🔹 القسم 0: الرقية العامة -->
+  <div class="content-panel active" id="section-0">
+    <div class="verse-card">
+        <div class="verse-header">🛡️ دعاء التحريج</div>
+        <div class="verse-tahreej">"أحرج عليكم بعهد الله وميثاقه، وبعهد سليمان بن داود، وبأسماء الله الحسنى وصفاته العلى، أن تخرجوا من هذا الجسد، ومن هذا البيت، ولا تؤذونا، ولا تسكنوا فينا، ولا تظهروا لنا في ليل أو نهار، فإني أحرج عليكم بكلمات الله التامات التي لا يجاوزهن بر ولا فاجر واعوذ بها،من شرور ما خلق وذرأ وبراء، أن ترحلوا بسلام، ولا تعودوا إلينا أبداً."</div>
+    </div>
     
-    <!-- =============================== -->
-    <!-- [ ضع كود صفحة الرقية هنا ] -->
-    <!-- =============================== -->
+    <div class="verse-card">
+        <div class="verse-header">💸 دعاء فك الرهان وضيق الرزق</div>
+        <div class="verse-text" style="font-family:'Tajawal',sans-serif;font-weight:600">"اللهم فك رهاني المرهونة من العين العائنة التي لم تذكر الله، ومن النفس الخبيثة الحاسدة، ومن السحر وعقده، ومن مس الشياطين"</div>
+    </div>
+    <div class="recommendation-box">🤲 يُكرر الدعاء بيقين وإلحاح في أوقات الاستجابة.</div>
+
+    <div class="verse-card"><div class="verse-header">📖 الرقية الشرعية العامة</div></div>
     
-    <!-- ⬆️️⬆️ نهاية كود صفحة الرقية ⬆️️⬆️ -->
+    <div class="verse-card">
+        <div class="verse-header">سورة الفاتحة × 7 مرات</div>
+        <div class="verse-text">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ﴿١﴾ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ﴿٢﴾ الرَّحْمَنِ الرَّحِيمِ ﴿٣﴾ مَالِكِ يَوْمِ الدِّينِ ﴿٤﴾ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ ﴿٥﴾ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ ﴿٦﴾ صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ ﴿٧﴾</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">آية الكرسي - البقرة: 255 × 3 مرات</div>
+        <div class="verse-text">اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ</div>    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">آخر آيتين من البقرة: 285-286</div>
+        <div class="verse-text">آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِّن رُسُلِهِ ۚ وَقَالُوا سَمِعْنَا وَأَطَعْنَا ۖ غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ ﴿٢٨٥﴾ لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا ۚ لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا اكْتَسَبَتْ ۗ رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا ۚ رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِن قَبْلِنَا ۚ رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ ۖ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا ۚ أَنتَ مَوْلَانَا فَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ ﴿٢٨٦﴾</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة الكافرون</div>
+        <div class="verse-text">قُلْ يَا أَيُّهَا الْكَافِرُونَ ﴿١﴾ لَا أَعْبُدُ مَا تَعْبُدُونَ ﴿٢﴾ وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ ﴿٣﴾ وَلَا أَنَا عَابِدٌ مَّا عَبَدتُّمْ ﴿٤﴾ وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ ﴿٥﴾ لَكُمْ دِينُكُمْ وَلِيَ دِينِ ﴿٦﴾</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة الإخلاص</div>
+        <div class="verse-text">قُلْ هُوَ اللَّهُ أَحَدٌ ﴿١﴾ اللَّهُ الصَّمَدُ ﴿٢﴾ لَمْ يَلِدْ وَلَمْ يُولَدْ ﴿٣﴾ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ ﴿٤﴾</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة الفلق</div>
+        <div class="verse-text">قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ﴿١﴾ مِن شَرِّ مَا خَلَقَ ﴿٢﴾ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ﴿٣﴾ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ﴿٤﴾ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ ﴿٥﴾</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة الناس</div>
+        <div class="verse-text">قُلْ أَعُوذُ بِرَبِّ النَّاسِ ﴿١﴾ مَلِكِ النَّاسِ ﴿٢﴾ إِلَٰهِ النَّاسِ ﴿٣﴾ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ﴿٤﴾ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ﴿٥﴾ مِنَ الْجِنَّةِ وَالنَّاسِ ﴿٦﴾</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة البقرة - الآية ١٦٣</div>
+        <div class="verse-text">وَإِلَٰهُكُمْ إِلَٰهٌ وَاحِدٌ ۖ لَّا إِلَٰهَ إِلَّا هُوَ الرَّحْمَٰنُ الرَّحِيمُ</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة البقرة - الآية ٢٨٤</div>
+        <div class="verse-text">لِّلَّهِ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ وَإِن تُبْدُوا مَا فِي أَنفُسِكُمْ أَوْ تُخْفُوهُ يُحَاسِبْكُم بِهِ اللَّهُ ۖ فَيَغْفِرُ لِمَن يَشَاءُ وَيُعَذِّبُ مَن يَشَاءُ ۗ وَاللَّهُ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ</div>
+    </div>
+    
+    <div class="verse-card">
+        <div class="verse-header">سورة آل عمران - الآيتان ١٨-١٩</div>
+        <div class="verse-text">شَهِدَ اللَّهُ أَنَّهُ لَا إِلَٰهَ إِلَّا هُوَ وَالْمَلَائِكَةُ وَأُولُو الْعِلْمِ قَائِمًا بِالْقِسْطِ ۚ لَا إِلَٰهَ إِلَّا هُوَ الْعَزِيزُ الْحَكِيمُ ﴿١٨﴾ إِنَّ الدِّينَ عِندَ اللَّهِ الْإِسْلَامُ ۗ وَمَا اخْتَلَفَ الَّذِينَ أُوتُوا الْكِتَابَ إِلَّا مِن بَعْدِ مَا جَاءَهُمُ الْعِلْمُ بَغْيًا بَيْنَهُمْ ۗ وَمَن يَكْفُرْ بِآيَاتِ اللَّهِ فَإِنَّ اللَّهَ سَرِيعُ الْحِسَابِ ﴿١٩﴾</div>
+    </div>
+    
+    <div class="verse-card">
+        <div class="verse-header">سورة الأعراف - الآيات ٥٤-٥٦</div>
+        <div class="verse-text">إِنَّ رَبَّكُمُ اللَّهُ الَّذِي خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ فِي سِتَّةِ أَيَّامٍ ثُمَّ اسْتَوَىٰ عَلَى الْعَرْشِ يُغْشِي اللَّيْلَ النَّهَارَ يَطْلُبُهُ حَثِيثًا وَالشَّمْسَ وَالْقَمَرَ وَالنُّجُومَ مُسَخَّرَاتٍ بِأَمْرِهِ ۗ أَلَا لَهُ الْخَلْقُ وَالْأَمْرُ ۗ تَبَارَكَ اللَّهُ رَبُّ الْعَالَمِينَ ﴿٥٤﴾ ادْعُوا رَبَّكُمْ تَضَرُّعًا وَخُفْيَةً ۚ إِنَّهُ لَا يُحِبُّ الْمُعْتَدِينَ ﴿٥٥﴾ وَلَا تُفْسِدُوا فِي الْأَرْضِ بَعْدَ إِصْلَاحِهَا وَادْعُوهُ خَوْفًا وَطَمَعًا ۚ إِنَّ رَحْمَتَ اللَّهِ قَرِيبٌ مِّنَ الْمُحْسِنِينَ ﴿٥٦﴾</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة المؤمنون - الآيات ١١-١١٨</div>
+        <div class="verse-text">أَفَحَسِبْتُمْ أَنَّمَا خَلَقْنَاكُمْ عَبَثًا وَأَنَّكُمْ إِلَيْنَا لَا تُرْجَعُونَ ﴿١١٥﴾ فَتَعَالَى اللَّهُ الْمَلِكُ الْحَقُّ ۖ لَا إِلَٰهَ إِلَّا هُوَ رَبُّ الْعَرْشِ الْكَرِيمِ ﴿١١٦﴾ وَمَن يَدْعُ مَعَ اللَّهِ إِلَٰهًا آخَرَ لَا بُرْهَانَ لَهُ بِهِ فَإِنَّمَا حِسَابُهُ عِندَ رَبِّهِ ۚ إِنَّهُ لَا يُفْلِحُ الْكَافِرُونَ ﴿١١٧﴾ وَقُل رَّبِّ اغْفِرْ وَارْحَمْ وَأَنتَ خَيْرُ الرَّاحِمِينَ ﴿١١٨﴾</div>    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة الحشر - الخواتيم (٢٢-٢٤)</div>
+        <div class="verse-text">هُوَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ ۖ عَالِمُ الْغَيْبِ وَالشَّهَادَةِ ۖ هُوَ الرَّحْمَٰنُ الرَّحِيمُ ﴿٢٢﴾ هُوَ اللَّهُ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ الْمَلِكُ الْقُدُّوسُ السَّلَامُ الْمُؤْمِنُ الْمُهَيْمِنُ الْعَزِيزُ الْجَبَّارُ الْمُتَكَبِّرُ ۚ سُبْحَانَ اللَّهِ عَمَّا يُشْرِكُونَ ﴿٢٣﴾ هُوَ اللَّهُ الْخَالِقُ الْبَارِئُ الْمُصَوِّرُ ۖ لَهُ الْأَسْمَاءُ الْحُسْنَىٰ ۚ يُسَبِّحُ لَهُ مَا فِي السَّمَاوَاتِ وَالْأَرْضِ ۖ وَهُوَ الْعَزِيزُ الْحَكِيمُ ﴿٢٤﴾</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة الصافات - الآيات ١-١٠</div>
+        <div class="verse-text">وَالصَّافَّاتِ صَفًّا ﴿١﴾ فَالزَّاجِرَاتِ زَجْرًا ﴿٢﴾ فَالتَّالِيَاتِ ذِكْرًا ﴿٣﴾ إِنَّ إِلَٰهَكُمْ لَوَاحِدٌ ﴿٤﴾ رَّبُّ السَّمَاوَاتِ وَالْأَرْضِ وَمَا بَيْنَهُمَا وَرَبُّ الْمَشَارِقِ ﴿٥﴾ إِنَّا زَيَّنَّا السَّمَاءَ الدُّنْيَا بِزِينَةٍ الْكَوَاكِبِ ﴿٦﴾ وَحِفْظًا مِّن كُلِّ شَيْطَانٍ مَّارِدٍ ﴿٧﴾ لَّا يَسَّمَّعُونَ إِلَى الْمَلَإِ الْأَعْلَىٰ وَيُقْذَفُونَ مِن كُلِّ جَانِبٍ ﴿٨﴾ دُحُورًا ۖ وَلَهُمْ عَذَابٌ وَاصِبٌ ﴿٩﴾ إِلَّا مَنْ خَطِفَ الْخَطْفَةَ فَأَتْبَعَهُ شِهَابٌ ثَاقِبٌ ﴿١٠﴾</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة الجن - الآية ٣</div>
+        <div class="verse-text">وَأَنَّهُ تَعَالَىٰ جَدُّ رَبِّنَا مَا اتَّخَذَ صَاحِبَةً وَلَا وَلَدًا</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة الجن - الآية ٦</div>
+        <div class="verse-text">وَأَنَّهُ كَانَ رِجَالٌ مِّنَ الْإِنسِ يَعُوذُونَ بِرِجَالٍ مِّنَ الْجِنِّ فَزَادُوهُمْ رَهَقًا</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة هود - الآية ٤٤ (المصححة)</div>
+        <div class="verse-text">وَقِيلَ يَا أَرْضُ ابْلَعِي مَاءَكِ وَيَا سَمَاءُ أَقْلِعِي وَغِيضَ الْمَاءُ وَقُضِيَ الْأَمْرُ وَاسْتَوَتْ عَلَى الْجُودِيِّ ۖ وَقِيلَ بُعْدًا لِّلْقَوْمِ الظَّالِمِينَ</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة طه - الآيتان ١٠٥-١٠٦ (المصححة)</div>
+        <div class="verse-text">وَيَسْأَلُونَكَ عَنِ الْجِبَالِ فَقُلْ يَنسِفُهَا رَبِّي نَسْفًا فَيَذَرُهَا قَاعًا صَفْصَفًا لَّا تَرَىٰ فِيهَا عِوَجًا وَلَا أَمْتًا</div>
+    </div>
+    <div class="recommendation-box">❗ <strong>نصيحة:</strong> أنصح بقراءتها كل يوم، وبعد الانتهاء اقرأ آيات الحفظ.</div>
+  </div>
+
+  <!-- 🔹 القسم 1: آيات السحر -->
+  <div class="content-panel" id="section-1">
+    <div class="verse-card">
+        <div class="verse-text" style="font-family:'Tajawal',sans-serif;font-weight:600;margin-bottom:12px">أعوذ بالله من الشيطان الرجيم</div>
+        <div class="verse-header" style="margin-top:10px">سورة الأعراف: 117-122</div>
+        <div class="verse-text">وَأَوْحَيْنَا إِلَىٰ مُوسَىٰ أَنْ أَلْقِ عَصَاكَ ۖ فَإِذَا هِيَ تَلْقَفُ مَا يَأْفِكُونَ ﴿١١٧﴾ فَوَقَعَ الْحَقُّ وَبَطَلَ مَا كَانُوا يَعْمَلُونَ ﴿١١٨﴾ فَغُلِبُوا هُنَالِكَ وَانقَلَبُوا صَاغِرِينَ ﴿١١٩﴾ وَأُلْقِيَ السَّحَرَةُ سَاجِدِينَ ﴿١٢٠﴾ قَالُوا آمَنَّا بِرَبِّ الْعَالَمِينَ ﴿١٢١﴾ رَبِّ مُوسَىٰ وَهَارُونَ ﴿١٢٢﴾</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة يونس: 81-82</div>
+        <div class="verse-text">فَلَمَّا أَلْقَوْا قَالَ مُوسَىٰ مَا جِئْتُم بِهِ السِّحْرُ ۖ إِنَّ اللَّهَ سَيُبْطِلُهُ ۖ إِنَّ اللَّهَ لَا يُصْلِحُ عَمَلَ الْمُفْسِدِينَ ﴿٨١﴾ وَيُحِقُّ اللَّهُ الْحَقَّ بِكَلِمَاتِهِ وَلَوْ كَرِهَ الْمُجْرِمُونَ ﴿٨٢﴾</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة طه: 69</div>
+        <div class="verse-text">وَأَلْقِ مَا فِي يَمِينِكَ تَلْقَفْ مَا صَنَعُوا ۖ إِنَّمَا صَنَعُوا كَيْدُ سَاحِرٍ ۖ وَلَا يُفْلِحُ السَّاحِرُ حَيْثُ أَتَىٰ</div>    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة البقرة: 102</div>
+        <div class="verse-text">وَاتَّبَعُوا مَا تَتْلُو الشَّيَاطِينُ عَلَىٰ مُلْكِ سُلَيْمَانَ ۖ وَمَا كَفَرَ سُلَيْمَانُ وَلَٰكِنَّ الشَّيَاطِينَ كَفَرُوا يُعَلِّمُونَ النَّاسَ السِّحْرَ وَمَا أُنزِلَ عَلَى الْمَلَكَيْنِ بِبَابِلَ هَارُوتَ وَمَارُوتَ ۚ وَمَا يُعَلِّمَانِ مِنْ أَحَدٍ حَتَّىٰ يَقُولَا إِنَّمَا نَحْنُ فِتْنَةٌ فَلَا تَكْفُرْ ۖ فَيَتَعَلَّمُونَ مِنْهُمَا مَا يُفَرِّقُونَ بِهِ بَيْنَ الْمَرْءِ وَزَوْجِهِ ۚ وَمَا هُم بِضَارِّينَ بِهِ مِنْ أَحَدٍ إِلَّا بِإِذْنِ اللَّهِ ۚ وَيَتَعَلَّمُونَ مَا يَضُرُّهُمْ وَلَا يَنفَعُهُمْ ۚ وَلَقَدْ عَلِمُوا لَمَنِ اشْتَرَاهُ مَا لَهُ فِي الْآخِرَةِ مِنْ خَلَاقٍ ۚ وَلَبِئْسَ مَا شَرَوْا بِهِ أَنفُسَهُمْ ۚ لَوْ كَانُوا يَعْلَمُونَ</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة الإسراء: 81</div>
+        <div class="verse-text">وَقُلْ جَاءَ الْحَقُّ وَزَهَقَ الْبَاطِلُ ۚ إِنَّ الْبَاطِلَ كَانَ زَهُوقًا</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة فُصّلت: 53</div>
+        <div class="verse-text">سَنُرِيهِمْ آيَاتِنَا فِي الْآفَاقِ وَفِي أَنفُسِهِمْ حَتَّىٰ يَتَبَيَّنَ لَهُمْ أَنَّهُ الْحَقُّ ۗ أَوَلَمْ يَكْفِ بِرَبِّكَ أَنَّهُ عَلَىٰ كُلِّ شَيْءٍ شَهِيدٌ</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة الرعد: 17</div>
+        <div class="verse-text">أَنزَلَ مِنَ السَّمَاءِ مَاءً فَسَالَتْ أَوْدِيَةٌ بِقَدَرِهَا فَاحْتَمَلَ السَّيْلُ زَبَدًا رَّابِيًا ۚ وَمِمَّا يُوقِدُونَ عَلَيْهِ فِي النَّارِ ابْتِغَاءَ حِلْيَةٍ أَوْ مَتَاعٍ زَبَدٌ مِّثْلُهُ ۚ كَذَٰلِكَ يَضْرِبُ اللَّهُ الْحَقَّ وَالْبَاطِلَ ۚ فَأَمَّا الزَّبَدُ فَيَذْهَبُ جُفَاءً ۖ وَأَمَّا مَا يَنفَعُ النَّاسَ فَيَمْكُثُ فِي الْأَرْضِ ۚ كَذَٰلِكَ يَضْرِبُ اللَّهُ الْأَمْثَالَ</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">دعاء إبطال السحر</div>
+        <div class="verse-text" style="font-family:'Tajawal',sans-serif;font-weight:600">"اللهم رب الناس، مذهب البأس، اشفِ وأنت الشافي، لا شفاء إلا شفاؤك، شفاءً لا يغادر سقماً. اللهم أبطل كل سحر، وابطل كل عين، وابطل كل حسد، ورد كيدهم في نحورهم، واجعل تدبيرهم تدميراً عليهم يا قوي يا عزيز."</div>
+    </div>
+    <div class="recommendation-box">🔄 تُقرأ هذه الآيات 7 مرات صباحًا ومساءً مع النفث على الماء للشرب والرش.</div>
+  </div>
+
+  <!-- 🔹 القسم 2: آيات الحسد -->
+  <div class="content-panel" id="section-2">
+    <div class="verse-card">
+        <div class="verse-text" style="font-family:'Tajawal',sans-serif;font-weight:600;margin-bottom:12px">أعوذ بالله من الشيطان الرجيم</div>
+        <div class="verse-header" style="margin-top:10px">سورة البقرة: 109</div>
+        <div class="verse-text">وَدَّ كَثِيرٌ مِّنْ أَهْلِ الْكِتَابِ لَوْ يَرُدُّونَكُم مِّن بَعْدِ إِيمَانِكُمْ كُفَّارًا حَسَدًا مِّنْ عِندِ أَنفُسِهِم مِّن بَعْدِ مَا تَبَيَّنَ لَهُمُ الْحَقُّ ۖ فَاعْفُوا وَاصْفَحُوا حَتَّىٰ يَأْتِيَ اللَّهُ بِأَمْرِهِ ۗ إِنَّ اللَّهَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة الكهف: 39</div>
+        <div class="verse-text">وَلَوْلَا إِذْ دَخَلْتَ جَنَّتَكَ قُلْتَ مَا شَاءَ اللَّهُ لَا قُوَّةَ إِلَّا بِاللَّهِ ۚ إِن تَرَنِ أَنَا أَقَلَّ مِنكَ مَالًا وَوَلَدًا</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة الملك: 1-4</div>
+        <div class="verse-text">تَبَارَكَ الَّذِي بِيَدِهِ الْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ ﴿١﴾ الَّذِي خَلَقَ الْمَوْتَ وَالْحَيَاةَ لِيَبْلُوَكُمْ أَيُّكُمْ أَحْسَنُ عَمَلًا ۚ وَهُوَ الْعَزِيزُ الْغَفُورُ ﴿٢﴾ الَّذِي خَلَقَ سَبْعَ سَمَاوَاتٍ طِبَاقًا ۖ مَا تَرَىٰ فِي خَلْقِ الرَّحْمَٰنِ مِن تَفَاوُتٍ ۖ فَارْجِعِ الْبَصَرَ هَلْ تَرَىٰ مِن فُطُورٍ ﴿٣﴾ ثُمَّ ارْجِعِ الْبَصَرَ كَرَّتَيْنِ يَنقَلِبْ إِلَيْكَ الْبَصَرُ خَاسِئًا وَهُوَ حَسِيرٌ ﴿٤﴾</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة الفلق × 3 مرات</div>
+        <div class="verse-text">قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ﴿١﴾ مِن شَرِّ مَا خَلَقَ ﴿٢﴾ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ﴿٣﴾ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ﴿٤﴾ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ ﴿٥﴾</div>    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة القلم: 51-52</div>
+        <div class="verse-text">وَإِن يَكَادُ الَّذِينَ كَفَرُوا لَيُزْلِقُونَكَ بِأَبْصَارِهِمْ لَمَّا سَمِعُوا الذِّكْرَ وَيَقُولُونَ إِنَّهُ لَمَجْنُونٌ ﴿٥١﴾ وَمَا هُوَ إِلَّا ذِكْرٌ لِّلْعَالَمِينَ ﴿٥٢﴾</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة يوسف: 67</div>
+        <div class="verse-text">وَقَالَ يَا بَنِيَّ لَا تَدْخُلُوا مِن بَابٍ وَاحِدٍ وَادْخُلُوا مِنْ أَبْوَابٍ مُّتَفَرِّقَةٍ ۖ وَمَا أُغْنِي عَنكُم مِّنَ اللَّهِ مِن شَيْءٍ ۖ إِنِ الْحُكْمُ إِلَّا لِلَّهِ ۖ عَلَيْهِ تَوَكَّلْتُ ۖ وَعَلَيْهِ فَلْيَتَوَكَّلِ الْمُتَوَكِّلُونَ</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">سورة النساء: 54</div>
+        <div class="verse-text">أَمْ يَحْسُدُونَ النَّاسَ عَلَىٰ مَا آتَاهُمُ اللَّهُ مِن فَضْلِهِ ۖ فَقَدْ آتَيْنَا آلَ إِبْرَاهِيمَ الْكِتَابَ وَالْحِكْمَةَ وَآتَيْنَاهُم مُّلْكًا عَظِيمًا</div>
+    </div>
+
+    <div class="verse-card">
+        <div class="verse-header">دعاء دفع العين</div>
+        <div class="verse-text" style="font-family:'Tajawal',sans-serif;font-weight:600">"أعوذ بكلمات الله التامات من شر ما خلق، اللهم اكفنيهم بما شئت، واصرف عني كيدهم وشرورهم، واجعلني في حرزك وحفظك ورعايتك، اللهم إني أسألك العافية في الدنيا والآخرة."</div>
+    </div>
+    <div class="recommendation-box">🛡️ للوقاية: قل "ما شاء الله لا قوة إلا بالله" عند الإعجاب بشيء.</div>
+  </div>
+
+  <!-- 🔹 القسم 3: آيات الشفاء -->
+  <div class="content-panel" id="section-3">
+    <div class="verse-card">
+        <div class="verse-header">سورة يونس: 57</div>
+        <div class="verse-text">يَا أَيُّهَا النَّاسُ قَدْ جَاءَتْكُم مَّوْعِظَةٌ مِّن رَّبِّكُمْ وَشِفَاءٌ لِّمَا فِي الصُّدُورِ وَهُدًى وَرَحْمَةٌ لِّلْمُؤْمِنِينَ</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة الشعراء: 80</div>
+        <div class="verse-text">وَإِذَا مَرِضْتُ فَهُوَ يَشْفِينِ</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة الإسراء: 82</div>
+        <div class="verse-text">وَنُنَزِّلُ مِنَ الْقُرْآنِ مَا هُوَ شِفَاءٌ وَرَحْمَةٌ لِّلْمُؤْمِنِينَ ۙ وَلَا يَزِيدُ الظَّالِمِينَ إِلَّا خَسَارًا</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة النحل: 69</div>
+        <div class="verse-text">ثُمَّ كُلِي مِن كُلِّ الثَّمَرَاتِ فَاسْلُكِي سُبُلَ رَبِّكِ ذُلُلًا ۚ يَخْرُجُ مِن بُطُونِهَا شَرَابٌ مُّخْتَلِفٌ أَلْوَانُهُ فِيهِ شِفَاءٌ لِّلنَّاسِ ۗ إِنَّ فِي ذَٰلِكَ لَآيَةً لِّقَوْمٍ يَتَفَكَّرُونَ</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة التوبة: 14</div>
+        <div class="verse-text">قَاتِلُوهُمْ يُعَذِّبْهُمُ اللَّهُ بِأَيْدِيكُمْ وَيُخْزِهِمْ وَيَنصُرْكُمْ عَلَيْهِمْ وَيَشْفِ صُدُورَ قَوْمٍ مُّؤْمِنِينَ</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة فصلت: 44</div>
+        <div class="verse-text">قُلْ هُوَ لِلَّذِينَ آمَنُوا هُدًى وَشِفَاءٌ ۖ وَالَّذِينَ لَا يُؤْمِنُونَ فِي آذَانِهِمْ وَقْرٌ وَهُوَ عَلَيْهِمْ عَمًى ۚ أُولَٰئِكَ يُنَادَوْنَ مِن مَّكَانٍ بَعِيدٍ</div>
+    </div>    <div class="verse-card">
+        <div class="verse-header">سورة الشرح: 1-8</div>
+        <div class="verse-text">أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ ﴿١﴾ وَوَضَعْنَا عَنكَ وِزْرَكَ ﴿٢﴾ الَّذِي أَنقَضَ ظَهْرَكَ ﴿٣﴾ وَرَفَعْنَا لَكَ ذِكْرَكَ ﴿٤﴾ فَإِنَّ مَعَ الْعُسْرِ يُسْرًا ﴿٥﴾ إِنَّ مَعَ الْعُسْرِ يُسْرًا ﴿٦﴾ فَإِذَا فَرَغْتَ فَانصَبْ ﴿٧﴾ وَإِلَىٰ رَبِّكَ فَارْغَب ﴿٨﴾</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة الأنعام: 17</div>
+        <div class="verse-text">وَإِن يَمْسَسْكَ اللَّهُ بِضُرٍّ فَلَا كَاشِفَ لَهُ إِلَّا هُوَ ۖ وَإِن يَمْسَسْكَ بِخَيْرٍ فَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ</div>
+    </div>
+    <div class="recommendation-box">🤲 <strong>دعاء الشفاء:</strong> اللَّهُمَّ رَبَّ النَّاسِ، أَذْهِبِ الْبَأْسَ، اشْفِ أَنْتَ الشَّافِي، لَا شِفَاءَ إِلَّا شِفَاؤُكَ، شِفَاءً لَا يُغَادِرُ سَقَمًا (3 مرات)</div>
+  </div>
+
+  <!-- 🔹 القسم 4: آيات الحفظ -->
+  <div class="content-panel" id="section-4">
+    <div class="verse-card">
+        <div class="verse-header">سورة البقرة × آية الكرسي (255)</div>
+        <div class="verse-text">اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة الأنعام × الآية 18</div>
+        <div class="verse-text">وَهُوَ الْقَاهِرُ فَوْقَ عِبَادِهِ ۚ وَهُوَ الْحَكِيمُ الْخَبِيرُ</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة الرعد × الآية 11</div>
+        <div class="verse-text">لَهُ مُعَقِّبَاتٌ مِّن بَيْنِ يَدَيْهِ وَمِنْ خَلْفِهِ يَحْفَظُونَهُ مِنْ أَمْرِ اللَّهِ ۗ إِنَّ اللَّهَ لَا يُغَيِّرُ مَا بِقَوْمٍ حَتَّىٰ يُغَيِّرُوا مَا بِأَنفُسِهِمْ ۗ وَإِذَا أَرَادَ اللَّهُ بِقَوْمٍ سُوءًا فَلَا مَرَدَّ لَهُ ۚ وَمَا لَهُم مِّن دُونِهِ مِن وَالٍ</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة الحجر × الآية 17</div>
+        <div class="verse-text">وَحَفِظْنَاهَا مِن كُلِّ شَيْطَانٍ رَّجِيمٍ</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة الصافات × الآية 7</div>
+        <div class="verse-text">وَحِفْظًا مِّن كُلِّ شَيْطَانٍ مَّارِدٍ</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة هود × الآية 57</div>
+        <div class="verse-text">فَإِن تَوَلَّوْا فَقَدْ أَبْلَغْتُكُم مَّا أُرْسِلْتُ بِهِ إِلَيْكُمْ ۚ وَيَسْتَخْلِفُ رَبِّي قَوْمًا غَيْرَكُمْ وَلَا تَضُرُّونَهُ شَيْئًا ۚ إِنَّ رَبِّي عَلَىٰ كُلِّ شَيْءٍ حَفِيظٌ</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة الطارق × الآية 4</div>
+        <div class="verse-text">إِن كُلُّ نَفْسٍ لَّمَّا عَلَيْهَا حَافِظٌ</div>
+    </div>
+    <div class="recommendation-box">🔐 تُقرأ هذه الآيات مساءً قبل النوم للحفظ من كل سوء.</div>
+  </div>
+
+  <!-- 🔹 القسم 5: آيات السكينة -->
+  <div class="content-panel" id="section-5">
+    <div class="verse-card">
+        <div class="verse-header">سورة الفتح: 4</div>
+        <div class="verse-text">هُوَ الَّذِي أَنزَلَ السَّكِينَةَ فِي قُلُوبِ الْمُؤْمِنِينَ لِيَزْدَادُوا إِيمَانًا مَّعَ إِيمَانِهِمْ ۗ وَلِلَّهِ جُنُودُ السَّمَاوَاتِ وَالْأَرْضِ ۚ وَكَانَ اللَّهُ عَلِيمًا حَكِيمًا</div>
+    </div>    <div class="verse-card">
+        <div class="verse-header">سورة التوبة: 26</div>
+        <div class="verse-text">ثُمَّ أَنزَلَ اللَّهُ سَكِينَتَهُ عَلَىٰ رَسُولِهِ وَعَلَى الْمُؤْمِنِينَ وَأَنزَلَ جُنُودًا لَّمْ تَرَوْهَا وَعَذَّبَ الَّذِينَ كَفَرُوا ۚ وَذَٰلِكَ جَزَاءُ الْكَافِرِينَ</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة التوبة: 40</div>
+        <div class="verse-text">إِلَّا تَنصُرُوهُ فَقَدْ نَصَرَهُ اللَّهُ إِذْ أَخْرَجَهُ الَّذِينَ كَفَرُوا ثَانِيَ اثْنَيْنِ إِذْ هُمَا فِي الْغَارِ إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا ۖ فَأَنزَلَ اللَّهُ سَكِينَتَهُ عَلَيْهِ وَأَيَّدَهُ بِجُنُودٍ لَّمْ تَرَوْهَا وَجَعَلَ كَلِمَةَ الَّذِينَ كَفَرُوا السُّفْلَىٰ ۗ وَكَلِمَةُ اللَّهِ هِيَ الْعُلْيَا ۗ وَاللَّهُ عَزِيزٌ حَكِيمٌ</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة البقرة: 248</div>
+        <div class="verse-text">وَقَالَ لَهُمْ نَبِيُّهُمْ إِنَّ آيَةَ مُلْكِهِ أَن يَأْتِيَكُمُ التَّابُوتُ فِيهِ سَكِينَةٌ مِّن رَّبِّكُمْ وَبَقِيَّةٌ مِّمَّا تَرَكَ آلُ مُوسَىٰ وَآلُ هَارُونَ تَحْمِلُهُ الْمَلَائِكَةُ ۚ إِنَّ فِي ذَٰلِكَ لَآيَةً لَّكُمْ إِن كُنتُم مُّؤْمِنِينَ</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة آل عمران: 159</div>
+        <div class="verse-text">فَبِمَا رَحْمَةٍ مِّنَ اللَّهِ لِنتَ لَهُمْ ۖ وَلَوْ كُنتَ فَظًّا غَلِيظَ الْقَلْبِ لَانفَضُّوا مِنْ حَوْلِكَ ۖ فَاعْفُ عَنْهُمْ وَاسْتَغْفِرْ لَهُمْ وَشَاوِرْهُمْ فِي الْأَمْرِ ۖ فَإِذَا عَزَمْتَ فَتَوَكَّلْ عَلَى اللَّهِ ۚ إِنَّ اللَّهَ يُحِبُّ الْمُتَوَكِّلِينَ</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة الرعد: 28</div>
+        <div class="verse-text">الَّذِينَ آمَنُوا وَتَطْمَئِنُّ قُلُوبُهُم بِذِكْرِ اللَّهِ ۗ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة الضحى: 1-11</div>
+        <div class="verse-text">وَالضُّحَىٰ ﴿١﴾ وَاللَّيْلِ إِذَا سَجَىٰ ﴿٢﴾ مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ ﴿٣﴾ وَلَلْآخِرَةُ خَيْرٌ لَّكَ مِنَ الْأُولَىٰ ﴿٤﴾ وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰ ﴿٥﴾ أَلَمْ يَجِدْكَ يَتِيمًا فَآوَىٰ ﴿٦﴾ وَوَجَدَكَ ضَالًّا فَهَدَىٰ ﴿٧﴾ وَوَجَدَكَ عَائِلًا فَأَغْنَىٰ ﴿٨﴾ فَأَمَّا الْيَتِيمَ فَلَا تَقْهَرْ ﴿٩﴾ وَأَمَّا السَّائِلَ فَلَا تَنْهَرْ ﴿١٠﴾ وَأَمَّا بِنِعْمَةِ رَبِّكَ فَحَدِّثْ ﴿١١﴾</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">سورة الشرح: 5-6</div>
+        <div class="verse-text">فَإِنَّ مَعَ الْعُسْرِ يُسْرًا ﴿٥﴾ إِنَّ مَعَ الْعُسْرِ يُسْرًا ﴿٦﴾</div>
+    </div>
+    <div class="verse-card">
+        <div class="verse-header">دعاء السكينة</div>
+        <div class="verse-text" style="font-family:'Tajawal',sans-serif;font-weight:600">"اللهم أنزل في قلبي السكينة، وأمددني بقوة من عندك، وألهمني رشدًا، وأعوذ بك من همزات الشياطين، اللهم إني أسألك الهدى والتقى والعفاف والغنى."</div>
+    </div>
+    <div class="recommendation-box">🕊️ تُقرأ هذه الآيات عند القلق أو الخوف لطلب السكينة والطمأنينة من الله.</div>
+  </div>
+
+  <div class="footer-section">
+    <p class="footer-dua">اللَّهُمَّ رَبَّ النَّاسِ، أَذْهِبِ الْبَأْسَ، اشْفِ أَنْتَ الشَّافِي، لَا شِفَاءَ إِلَّا شِفَاؤُكَ، شِفَاءً لَا يُغَادِرُ سَقَمًا.</p>
+    <div class="footer-divider"></div>
+    <p class="footer-text">نسأل الله لكم دوام الصحة والعافية وراحة البال</p>
+    <div class="app-copyright">تطبيق صفاء الروح - جميع الحقوق محفوظة لـ sabriFX © 2026</div>
+  </div>
+</div>
+
+<!-- شريط التنقل السفلي -->
+<div class="bottom-nav">
+    <div class="nav-item active" onclick="showSection(0)"><i class="fas fa-book-quran"></i><span>الرقية</span></div>
+    <div class="nav-item" onclick="showSection(1)"><i class="fas fa-broom"></i><span>السحر</span></div>
+    <div class="nav-item" onclick="showSection(2)"><i class="fas fa-eye"></i><span>الحسد</span></div>
+    <div class="nav-item" onclick="showSection(3)"><i class="fas fa-heart-pulse"></i><span>الشفاء</span></div>
+    <div class="nav-item" onclick="showSection(4)"><i class="fas fa-shield-halved"></i><span>الحفظ</span></div>    <div class="nav-item" onclick="showSection(5)"><i class="fas fa-moon"></i><span>السكينة</span></div>
+</div>
+
+<div id="connection-status" onclick="checkConnection()"><i class="fas fa-sync-alt"></i> تحديث</div>
+
+<script>
+function showSection(idx){
+    document.querySelectorAll('.content-panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    document.querySelectorAll('.content-panel')[idx].classList.add('active');
+    document.querySelectorAll('.nav-item')[idx].classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+}
+function goBack(){if(window.history.length>1)window.history.back();else if(window.parent&&window.parent!==window)window.parent.postMessage({action:'navigate',page:'index'},'*');else window.location.href='index.html';}
+function checkConnection(){const off=document.getElementById('offline-page'),conn=document.getElementById('connection-status');if(navigator.onLine){off.classList.remove('show');conn.classList.remove('show');}else{off.classList.add('show');}}
+window.addEventListener('online',()=>{document.getElementById('connection-status').classList.add('show');setTimeout(()=>{checkConnection();document.getElementById('connection-status').classList.remove('show');},2000);});
+window.addEventListener('offline',checkConnection);
+if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js').then(r=>console.log('✅ SW:',r.scope)).catch(e=>console.log('❌ SW:',e));}
+document.addEventListener('DOMContentLoaded',checkConnection);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'||(e.altKey&&e.key==='ArrowRight'))goBack();});
+</script>
+</body>
+</html>
 </div>
 
 <!-- 🧠 صفحة الاختبار -->
