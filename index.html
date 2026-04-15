@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>صفاء الروح | تجربة إيمانية فاخرة</title>
     
-    <!-- استدعاء خطوط احترافية ومزخرفة -->
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Amiri:wght@400;700&family=Reem+Kufi:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -22,6 +21,7 @@
             --text-muted: #a0a0a0;
         }
 
+        /* لضمان عمل الخطوط المحلية في حال عدم توفر الإنترنت سنستخدم الخطوط المثبتة في النظام كبديل */
         * {
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
@@ -30,7 +30,7 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Almarai', sans-serif;
+            font-family: 'Almarai', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-dark);
             background-image: 
                 radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
@@ -42,7 +42,6 @@
             flex-direction: column;
         }
 
-        /* تأثير الجزيئات المتساقطة */
         .particles {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -51,7 +50,6 @@
             opacity: 0.3;
         }
 
-        /* ===== الهيدر الإبداعي ===== */
         .header {
             position: relative;
             height: 360px;
@@ -94,7 +92,6 @@
             padding: 20px;
         }
 
-        /* الإطار الدائري */
         .logo-ring {
             width: 115px;
             height: 115px;
@@ -125,9 +122,8 @@
             100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
         }
 
-        /* العنوان بخط مزخرف واحترافي */
         .header h1 {
-            font-family: 'Aref Ruqaa', serif; /* خط رقعة احترافي ومزخرف */
+            font-family: 'Aref Ruqaa', 'Amiri', serif;
             font-size: 46px;
             margin: 0;
             background: var(--gold-gradient);
@@ -138,7 +134,6 @@
             font-weight: 700;
         }
 
-        /* العبارة التعريفية بعبير إبداعي */
         .header p {
             font-family: 'Amiri', serif;
             font-size: 16px;
@@ -164,7 +159,6 @@
             box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
         }
 
-        /* ===== شبكة الأقسام ===== */
         .main-container {
             flex: 1;
             padding: 10px 20px 100px 20px;
@@ -199,10 +193,6 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 25px rgba(212, 175, 55, 0.15);
         }
 
-        .nav-card:active {
-            transform: scale(0.95);
-        }
-
         .icon-wrapper {
             width: 65px;
             height: 65px;
@@ -212,7 +202,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.4s;
         }
 
         .nav-card:hover .icon-wrapper {
@@ -223,7 +212,6 @@
         .icon-wrapper i {
             font-size: 28px;
             color: var(--accent-gold);
-            transition: all 0.4s;
         }
 
         .nav-card:hover .icon-wrapper i {
@@ -235,10 +223,8 @@
             font-size: 16px;
             font-weight: 700;
             color: var(--text-main);
-            letter-spacing: 0.5px;
         }
 
-        /* ===== الفوتر ===== */
         .footer {
             padding: 35px;
             text-align: center;
@@ -248,14 +234,9 @@
         .footer-text {
             font-size: 13px;
             color: var(--text-muted);
-            letter-spacing: 1px;
         }
 
-        .footer-text b {
-            color: var(--accent-gold);
-            font-weight: 800;
-            margin: 0 5px;
-        }
+        .footer-text b { color: var(--accent-gold); }
 
         .designer-brand {
             display: inline-block;
@@ -264,37 +245,20 @@
             border-radius: 12px;
             background: rgba(255,255,255,0.05);
             font-size: 11px;
-            text-transform: uppercase;
-            border: 1px solid rgba(255,255,255,0.1);
             color: #888;
-        }
-
-        /* تحسينات الشاشات الصغيرة */
-        @media (max-width: 380px) {
-            .app-grid { gap: 15px; }
-            .nav-card { padding: 20px 10px; }
-            .header { height: 320px; }
-            .header h1 { font-size: 38px; }
-            .logo-ring { width: 95px; height: 95px; }
-        }
-
-        /* تأثيرات الظهور */
-        .fade-in-up {
-            animation: fadeInUp 0.8s ease-out both;
         }
 
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .fade-in-up { animation: fadeInUp 0.8s ease-out both; }
     </style>
 </head>
-
 <body>
 
     <canvas class="particles" id="canvas"></canvas>
 
-    <!-- الهيدر المطور -->
     <header class="header animate__animated animate__fadeInDown">
         <div class="header-bg"></div>
         <div class="header-overlay"></div>
@@ -308,88 +272,70 @@
         </div>
     </header>
 
-    <!-- محتوى التطبيق الرئيسي -->
     <main class="main-container">
         <div class="app-grid">
-            
             <div onclick="smartNav('quran')" class="nav-card fade-in-up" style="animation-delay: 0.1s;">
                 <div class="icon-wrapper"><i class="fa-solid fa-book-open-reader"></i></div>
                 <span>القرآن الكريم</span>
             </div>
-
             <div onclick="smartNav('azkar')" class="nav-card fade-in-up" style="animation-delay: 0.2s;">
                 <div class="icon-wrapper"><i class="fa-solid fa-hands-praying"></i></div>
                 <span>الأذكار اليومية</span>
             </div>
-
             <div onclick="smartNav('ruqia')" class="nav-card fade-in-up" style="animation-delay: 0.3s;">
                 <div class="icon-wrapper"><i class="fa-solid fa-shield-heart"></i></div>
                 <span>الرقية الشرعية</span>
             </div>
-
             <div onclick="smartNav('akhtbar')" class="nav-card fade-in-up" style="animation-delay: 0.4s;">
                 <div class="icon-wrapper"><i class="fa-solid fa-lightbulb"></i></div>
                 <span>اختبر معلوماتك</span>
             </div>
-
             <div onclick="smartNav('awkat-alslat')" class="nav-card fade-in-up" style="animation-delay: 0.5s;">
                 <div class="icon-wrapper"><i class="fa-solid fa-mosque"></i></div>
                 <span>مواقيت الصلاة</span>
             </div>
-
             <div onclick="smartNav('msbaha')" class="nav-card fade-in-up" style="animation-delay: 0.6s;">
                 <div class="icon-wrapper"><i class="fa-solid fa-circle-nodes"></i></div>
                 <span>المسبحة الذكية</span>
             </div>
-
             <div onclick="smartNav('ahlam')" class="nav-card fade-in-up" style="animation-delay: 0.7s;">
                 <div class="icon-wrapper"><i class="fa-solid fa-cloud-moon"></i></div>
                 <span>تفسير الأحلام</span>
             </div>
-
             <div onclick="smartNav('omrah')" class="nav-card fade-in-up" style="animation-delay: 0.8s;">
                 <div class="icon-wrapper"><i class="fa-solid fa-kaaba"></i></div>
                 <span>دليل العمرة</span>
             </div>
-
         </div>
     </main>
 
-    <!-- الفوتر المطور -->
     <footer class="footer">
-        <div class="footer-text">
-            صُمم بكل إبداع بواسطة <b>sabriFX</b> ✨
-        </div>
+        <div class="footer-text">صُمم بكل إبداع بواسطة <b>sabriFX</b> ✨</div>
         <div class="designer-brand">Visual Experience v4.0</div>
     </footer>
 
     <script>
-        // نظام التنقل الذكي
         function smartNav(section) {
             const githubBase = "https://ahmedsaleh917.github.io/";
             const localFile = section + ".html";
             
-            if (window.navigator.vibrate) {
-                window.navigator.vibrate(30);
-            }
+            if (window.navigator.vibrate) window.navigator.vibrate(30);
 
+            // التحقق من الاتصال عبر navigator.onLine أو عبر محاولة الوصول لـ Google
             if (navigator.onLine) {
+                // إذا كان في Assets يفتح رابط خارجي، إذا كان في GitHub يكمل المسار
                 window.location.href = githubBase + section + "/";
             } else {
+                // فتح الملف المحلي من الـ Assets
                 window.location.href = localFile;
             }
         }
 
-        // تأثير الجزيئات في الخلفية
+        // إبقاء كود الجزيئات كما هو
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-
-        function initCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
+        function initCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
@@ -399,45 +345,27 @@
                 this.speedY = Math.random() * 0.4 - 0.2;
             }
             update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width) this.x = 0;
-                if (this.x < 0) this.x = canvas.width;
-                if (this.y > canvas.height) this.y = 0;
-                if (this.y < 0) this.y = canvas.height;
+                this.x += this.speedX; this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0; if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0; if (this.y < 0) this.y = canvas.height;
             }
             draw() {
                 ctx.fillStyle = 'rgba(212, 175, 55, 0.4)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
-
         function createParticles() {
             particles = [];
             const count = Math.floor(window.innerWidth / 10);
-            for (let i = 0; i < count; i++) {
-                particles.push(new Particle());
-            }
+            for (let i = 0; i < count; i++) { particles.push(new Particle()); }
         }
-
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
+            particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animate);
         }
-
-        window.addEventListener('resize', () => {
-            initCanvas();
-            createParticles();
-        });
-        initCanvas();
-        createParticles();
-        animate();
+        window.addEventListener('resize', () => { initCanvas(); createParticles(); });
+        initCanvas(); createParticles(); animate();
     </script>
 </body>
 </html>
